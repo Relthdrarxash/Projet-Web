@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,24 +19,28 @@
 				<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 					<a class="navbar-brand" href="#">Quentin Noilou</a>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<?php 
+						if 
+						// Si la page du menu est la page courante
+						?>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="index.html">CV Numérique</a>
 						</li>
+						<?php
+						?>
+						<?php 
+						if 
+						// Si la page du menu en est une autre
+						?>
 						<li class="nav-item">
-							<a class="nav-link" href="competences.html">Compétences</a>
+							<a class="nav-link" aria-current="page" href="index.html">CV Numérique</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="interets.html">Intérêts</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="projetprofessionnel.html">Projet Professionnel</a>
-						</li>	
-						<li class="nav-item">
-							<a class="nav-link" href="liensutiles.html">Liens Utiles</a>
-						</li>
+						<?php
+						?>
 					</ul>
 				</div>
 			</div>
 		</nav>
 		<!-- Navbar -->
 </header>
+<!-- Fichier à inclure pour faire le footer -->
