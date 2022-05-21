@@ -19,6 +19,16 @@ include('header.php');
             <input type="submit" class="fourth" value="Log In" name="connexion">
         </form>
 
+
+        <p>
+            <?php
+            if (!empty($_POST["connexion"])
+                && isset($_POST["login"])
+                && isset($_POST["password"])) {
+                connexion($_POST["login"], $_POST["password"]);
+            }
+            ?>
+        </p>
         <!-- Remind Passowrd -->
         <div id="formFooter">
             <a class="underlineHover" href="#">Go to the Site</a>

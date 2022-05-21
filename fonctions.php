@@ -9,10 +9,10 @@ function generationMenu($tableauMenu)
 	$html = '<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">' . "\n" .
 		'<div class="container-fluid">' . "\n" .
 		'<ul class="navbar-nav me-auto mb-2 mb-lg-0">';
-		// On récupère le nom de fichier pour le mettre en évidence avec le "active" de Bootstrap
-		$fileName=explode("/",$_SERVER['SCRIPT_NAME']);
-		// Décommenter pour vérifier le nom du fichier
-		// echo end($fileName);
+	// On récupère le nom de fichier pour le mettre en évidence avec le "active" de Bootstrap
+	$fileName = explode("/", $_SERVER['SCRIPT_NAME']);
+	// Décommenter pour vérifier le nom du fichier
+	// echo end($fileName);
 	foreach ($tableauMenu as $page) {
 		/* On peut ptet s'éviter de faire deux fois le même test si on met le active dans un if
              En mode <a class="nav-link "<?php if ($_SERVER['PHP_SELF'] == $page['url']) echo 'active';?href='{$page['url']}'>{$page['texte']}</a>\n";
@@ -29,29 +29,22 @@ function generationMenu($tableauMenu)
 	return $html;
 }
 
-function connexion($login,$pass) {
+function connexion($login, $pass)
+{
 	$retour = false;
 
 	include('connexionBDD.php');
 
 	$login = $BDD->quote($login);
 	$pass = $BDD->quote($pass);
-	$requete = "SELECT Email,Pass FROM compte WHERE login = ".$login." AND password = ".$pass ;
-		//var_dump($requete);echo "<br/>";  	
-		$resultat = $madb->query($requete);
-		$tableau_assoc = $resultat->fetchAll(PDO::FETCH_ASSOC);
-		if (sizeof($tableau_assoc)!=0) $retour = true;	
-		return $retour;
-
-	$requete = "SELECT mail, adresse, commune FROM etudiants AS e INNER JOIN villes v ON e.insee = v.insee WHERE e.insee=$insee;";
-	$resultat = $madb->query($requete);
-
-	if ($resultat) {
-
-		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
-
-	}
-
-
+	$requete = "SELECT login,password FROM comptes WHERE login = " . $login . " AND password = " . $pass;
+	// var_dump($requete);
+	// echo "<br/>";  	
+	$resultat = $BDD->query($requete);
+	$tableau_assoc = $resultat->fetchAll(PDO::FETCH_ASSOC);
+	// Si le tableau est vide alors c'est que le compte n'est pas valide
+	var_dump($tableau_assoc);
+	if (sizeof($tableau_assoc) != 0) $retour = true;
 	return $retour;
+
 }
