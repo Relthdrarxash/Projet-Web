@@ -23,23 +23,26 @@ function generationMenu($tableauMenu)
              En mode <a class="nav-link "<?php if ($_SERVER['PHP_SELF'] == $page['url']) echo 'active';?href='{$page['url']}'>{$page['texte']}</a>\n";
             */
 		$html .= "<li>";
+		// Si on est connecté, on n'affiche pas la page connexion
 		if ($_SESSION && $page['url'] != 'connexion.php') {
 			if ($fileName == $page['url']) {
 				// Ici on mettra le lien en active pour qu'il soit mis en évidence
-				$html .= '<a class="nav-link active mr mx-1" aria-current="page" '. "href='{$page['url']}'>{$page['texte']}</a>";
+				$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" '. "href='{$page['url']}'>{$page['texte']}</a>";
 			} 
 			else {
 				// Ici on va mettre toutes les autres pages qui seront pas en active du coup
-				$html .= '<a class="nav-link mx-2" aria-current="page" '. "href='{$page['url']}'>{$page['texte']}</a>";
+				$html .= '<a class="nav-link px-1 mx-1" aria-current="page" '. "href='{$page['url']}'>{$page['texte']}</a>";
 			}
-		} else if (empty($_SESSION) && $page['url'] != 'deconnexion.php') {
+		} 
+		// Si on n'est pas connecté, on n'affiche pas la page déconnexion
+		else if (empty($_SESSION) && $page['url'] != 'deconnexion.php') {
 			if ($fileName == $page['url']) {
 				// Ici on mettra le lien en active pour qu'il soit mis en évidence
-				$html .= '<a class="nav-link active mr mx-1" aria-current="page" '. "href='{$page['url']}'>{$page['texte']}</a>";
+				$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" '. "href='{$page['url']}'>{$page['texte']}</a>";
 			} 
 			else {
 				// Ici on va mettre toutes les autres pages qui seront pas en active du coup
-				$html .= '<a class="nav-link mx-2" aria-current="page" '. "href='{$page['url']}'>{$page['texte']}</a>";
+				$html .= '<a class="nav-link px-1 mx-1" aria-current="page" '. "href='{$page['url']}'>{$page['texte']}</a>";
 			}
 		}
 		

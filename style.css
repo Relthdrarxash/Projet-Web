@@ -12,6 +12,8 @@ li > .nav-link {
     Problème d'affichage : il y a un rectangle qui s'affiche 
     */
     border-radius: 10px;
+    width: 80px;
+    text-align: center;
 }
 
 li > .nav-link:hover {
@@ -20,8 +22,6 @@ li > .nav-link:hover {
     */
     background-color :#56baed;
     border-radius: 10px;
-    display: flex;
-    align-items: center;
     text-decoration: none;
 }
 
@@ -112,7 +112,9 @@ input[type=reset]:active {
     transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text],
+input[type=password]
+ {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;
@@ -133,11 +135,13 @@ input[type=text] {
     border-radius: 5px 5px 5px 5px;
 }
 
+input[type=text]:focus,
 input[type=text]:focus {
     background-color: #fff;
     border-bottom: 2px solid #5fbae9;
 }
 
+input[type=text]:placeholder
 input[type=text]:placeholder {
     color: #cccccc;
 }

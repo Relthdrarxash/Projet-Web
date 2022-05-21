@@ -14,8 +14,9 @@ include('header.php');
 
         <!-- Login Form -->
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="return EtTaFonctionJS();">
+            <!-- Si un formulaire a déjà été rempli, on conserve le login mais pas le mot de passe -->
             <input type="text" id="login" class="second" name="login" placeholder="username" value="<?php if(isset($_POST["login"])) echo $_POST["login"]; ?>">
-            <input type="text" id="password" class="third" name="password" placeholder="password">
+            <input type="password" id="password" class="third" name="password" placeholder="password">
             <input type="submit" class="fourth" value="Log In" name="connexion">
         </form>
 
