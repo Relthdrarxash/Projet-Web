@@ -10,10 +10,12 @@ function generationMenu($tableauMenu)
     '<div class="container-fluid">'."\n".
     '<div class="collapse navbar-collapse" id="navbarTogglerDemo01">'."\n".
     '<ul class="navbar-nav me-auto mb-2 mb-lg-0">';
+	echo $_SERVER['PHP_SELF'];
     foreach ($tableauMenu as $page) {
         /* On peut ptet s'éviter de faire deux fois le même test si on met le active dans un if
              En mode <a class="nav-link "<?php if ($_SERVER['PHP_SELF'] == $page['url']) echo 'active';?href='{$page['url']}'>{$page['texte']}</a>\n";
             */
+			echo $page['url']."\n";
         if ($_SERVER['PHP_SELF'] == $page['url']) {
             // Ici on mettra le lien en active pour qu'il soit mis en évidence
             $html .= '<a class="nav-link active" aria-current="page"'."href='{$page['url']}'>{$page['texte']}</a>\n";
