@@ -5,7 +5,7 @@
                 <span class="text-muted">
                     Copyright ©<script>
                         document.write(new Date().getFullYear());
-                    </script> - All rights reserved</a>
+                    </script> - All rights reserved
                 </span>
             </div>
         </div>

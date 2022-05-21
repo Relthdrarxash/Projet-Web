@@ -7,18 +7,17 @@ a {
     font-weight: 400;
 }
 
-.nav-link {
+li > .nav-link {
     /*
     Problème d'affichage : il y a un rectangle qui s'affiche 
     */
     border-radius: 10px;
 }
 
-.nav-link:hover {
+li > .nav-link:hover {
     /*
     On entoure les liens du menus de bleu au moment du survol
     */
-    padding: 0.5rem;
     background-color :#56baed;
     border-radius: 10px;
     display: flex;
@@ -27,6 +26,10 @@ a {
 }
 
 /* Design Connexion.php */
+
+#connexionPasOk {
+    color: red;
+}
 
 .wrapper {
     display: flex;
@@ -52,14 +55,6 @@ a {
     text-align: center;
 }
 
-#formFooter {
-    background-color: #f6f6f6;
-    border-top: 1px solid #dce8f1;
-    padding: 25px;
-    text-align: center;
-    -webkit-border-radius: 0 0 10px 10px;
-    border-radius: 0 0 10px 10px;
-}
 
 
 

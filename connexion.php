@@ -14,7 +14,7 @@ include('header.php');
 
         <!-- Login Form -->
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="return EtTaFonctionJS();">
-            <input type="text" id="login" class="second" name="login" placeholder="username">
+            <input type="text" id="login" class="second" name="login" placeholder="username" value="<?php if(isset($_POST["login"])) echo $_POST["login"]; ?>">
             <input type="text" id="password" class="third" name="password" placeholder="password">
             <input type="submit" class="fourth" value="Log In" name="connexion">
         </form>
@@ -22,17 +22,22 @@ include('header.php');
 
         <p>
             <?php
-            if (!empty($_POST["connexion"])
+            if (empty($_SESSION)
+                && !empty($_POST["connexion"])
                 && isset($_POST["login"])
                 && isset($_POST["password"])) {
-                connexion($_POST["login"], $_POST["password"]);
+                $etatConnexion = connexion($_POST["login"], $_POST["password"]);
+                if ($etatConnexion) {
+                    redirect();
+                }
+                else {
+                    echo '<p id="connexionPasOk">'."\n";
+                    echo "Login/Mot de passe Incorrect\n";
+                    echo "</p>\n";
+                }
             }
             ?>
         </p>
-        <!-- Remind Passowrd -->
-        <div id="formFooter">
-            <a class="underlineHover" href="#">Go to the Site</a>
-        </div>
 
     </div>
 </div>
