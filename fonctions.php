@@ -28,34 +28,30 @@ function generationMenu($tableauMenu)
 	$html .= "</nav>\n";
 	return $html;
 }
-?>
-<!-- 
-        Code à passer dans le PHP
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-			<div class="container-fluid">
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-					<a class="navbar-brand" href="#">Quentin Noilou</a>
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="index.html">CV Numérique</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="competences.html">Compétences</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="interets.html">Intérêts</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="projetprofessionnel.html">Projet Professionnel</a>
-						</li>	
-						<li class="nav-item">
-							<a class="nav-link" href="liensutiles.html">Liens Utiles</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>*
--->
+
+function connexion($login,$pass) {
+	$retour = false;
+
+	include('connexionBDD.php');
+
+	$login = $BDD->quote($login);
+	$pass = $BDD->quote($pass);
+	$requete = "SELECT Email,Pass FROM compte WHERE login = ".$login." AND password = ".$pass ;
+		//var_dump($requete);echo "<br/>";  	
+		$resultat = $madb->query($requete);
+		$tableau_assoc = $resultat->fetchAll(PDO::FETCH_ASSOC);
+		if (sizeof($tableau_assoc)!=0) $retour = true;	
+		return $retour;
+
+	$requete = "SELECT mail, adresse, commune FROM etudiants AS e INNER JOIN villes v ON e.insee = v.insee WHERE e.insee=$insee;";
+	$resultat = $madb->query($requete);
+
+	if ($resultat) {
+
+		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+
+	}
+
+
+	return $retour;
+}
