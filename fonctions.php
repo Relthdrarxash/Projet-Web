@@ -1,13 +1,14 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 $fileName = explode("/", $_SERVER['SCRIPT_NAME']);
 $fileName = end($fileName);
 
-//****************Fonctions utilisées**************************************
-
+//##########################Fonctions utilisées###############################
 
 //****************Génération du menu**************************************
-function generationMenu($tableauMenu)
+function generationMenu($tableauMenu) : string
 {
 	$html = '<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">' . "\n" .
 		'<div class="container-fluid">' . "\n" .
@@ -54,7 +55,7 @@ function generationMenu($tableauMenu)
 }
 
 // Récupération du nom de fichier pour la génération du menu en dynamique
-function nomFichier()
+function nomFichier() : string
 {
 	$fileName = explode("/", $_SERVER['SCRIPT_NAME']);
 	$pageTitle = explode(".", end($fileName));
@@ -62,7 +63,7 @@ function nomFichier()
 }
 
 //****************Connexion de l'utilisateur**************************************
-function connexion($login, $pass)
+function connexion($login, $pass) : bool
 {
 	$retour = false;
 
@@ -96,7 +97,7 @@ function connexion($login, $pass)
 }
 
 //****************Récupération du statut de l'utilisateur**************************************
-function getStatut($login)
+function getStatut($login) : bool
 {
 	include('connexionBDD.php');
 
@@ -127,7 +128,8 @@ function redirect()
 	}
 }
 
-function deconnexion()
+//****************Déconnexion**************************************
+function deconnexion() 
 {
 	session_start();
 	session_unset(); // == $_SESSION=array()

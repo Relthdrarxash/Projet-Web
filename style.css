@@ -26,7 +26,6 @@ li > .nav-link:hover {
 }
 
 /* Design Connexion.php */
-
 #connexionPasOk {
     color: red;
 }
@@ -185,6 +184,6 @@ h1 {
 }
 
 #icon {
-    width: 30%;
+    width: 70%;
 }
 

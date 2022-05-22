@@ -11,6 +11,7 @@
 			echo nomFichier();
 		?>
 	</title>
+	<link rel="icon" type="image/x-icon" href="img/favicon.ico">
 	<!-- On insère les pages de style dans l'ordre d'importance (bootstrap ne doit pas réecrire le style que l'on a choisi)  -->
 	<!-- Pour l'Animate On Scroll -->
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">

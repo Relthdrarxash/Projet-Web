@@ -6,8 +6,8 @@ include('header.php');
     <div id="formContent" data-aos="zoom-in-down">
         <!-- Icon -->
         <div class="first">
-            <img src="https://www.b-cube.in/wp-content/uploads/2014/05/aditya-300x177.jpg" id="icon" alt="User Icon" />
-            <h1>Aditya News</h1>
+            <img src="img/mamazon.png" id="icon" alt="Mamazon" />
+            <h1>Connexion</h1>
         </div>
 
         <!-- Login Form -->
