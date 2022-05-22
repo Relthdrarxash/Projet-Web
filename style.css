@@ -12,7 +12,7 @@ li > .nav-link {
     Problème d'affichage : il y a un rectangle qui s'affiche 
     */
     border-radius: 10px;
-    width: 80px;
+    width: 100px;
     text-align: center;
 }
 
