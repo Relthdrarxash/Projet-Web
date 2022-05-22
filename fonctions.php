@@ -22,7 +22,45 @@ function generationMenu($tableauMenu): string
              En mode <a class="nav-link "<?php if ($_SERVER['PHP_SELF'] == $page['url']) echo 'active';?href='{$page['url']}'>{$page['texte']}</a>\n";
             */
 		$html .= "<li>";
-		// Si on est connecté, on n'affiche pas la page connexion
+
+		// Si on n'est pas connecté -> affichage de la page connexion, pas d'affichage de la page connexion, pas d'affichge des pages insertion ou modification
+		if (empty($_SESSION) && $page['statut'] == 'all' && $page['url'] != 'deconnexion.php') {
+			if ($fileName == $page['url']) {
+				// Ici on mettra le lien en active pour qu'il soit mis en évidence
+				$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
+			} else if ($page['url'] != 'deconnexion.php') {
+				// Ici on va mettre toutes les autres pages qui seront pas en active du coup
+				$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
+			}
+		} 
+		// Si on est connecté -> On teste si on est un utilisateur ou un admin
+		else {
+			// Si utilisateur -> pas d'affichage des pages insertion et modification
+			if (!empty($_SESSION) && $_SESSION["statut"] == 'utilisateur' && $page['statut'] == 'all' && $page['url'] != 'connexion.php') {
+				if ($fileName == $page['url']) {
+					// Ici on mettra le lien en active pour qu'il soit mis en évidence
+					$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
+				} else {
+					// Ici on va mettre toutes les autres pages qui seront pas en active du coup
+					$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
+				}
+			}
+			else if (!empty($_SESSION) && $_SESSION["statut"] == 'administrateur' && $page['url'] != 'connexion.php'){
+				if ($_SESSION && $page['url'] != 'connexion.php') {
+					if ($fileName == $page['url']) {
+						// Ici on mettra le lien en active pour qu'il soit mis en évidence
+						$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
+					} else {
+						// Ici on va mettre toutes les autres pages qui seront pas en active du coup
+						$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
+					}
+				}
+			}
+		}
+
+
+
+		/*
 		if ($_SESSION && $page['url'] != 'connexion.php') {
 			if ($fileName == $page['url']) {
 				// Ici on mettra le lien en active pour qu'il soit mis en évidence
@@ -42,7 +80,7 @@ function generationMenu($tableauMenu): string
 				$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
 			}
 		}
-
+		*/
 		$html .= "</li>\n";
 	}
 	$html .= "</ul>\n";
@@ -109,6 +147,7 @@ function connexion($login, $pass): bool
 	return $retour;
 }
 
+//****************Génération des logs**************************************
 function logsConnexion()
 {
 	$statutConnexion = "échouée";
@@ -168,4 +207,11 @@ function deconnexion()
 	session_unset(); // == $_SESSION=array()
 	session_destroy();
 	redirect();
+}
+
+//****************Affichage Accès refusé**************************************
+function deniedAccess() {
+	echo '<p class="text">Welcome to 403:</p>
+	<h1 class="title">Forbidden resource</h1>
+	<p class="text">The server understood the request but refuses to authorize it.</p>';
 }

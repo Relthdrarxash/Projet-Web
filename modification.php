@@ -1,10 +1,15 @@
 <?php
-    include('header.php'); 
+    include('header.php');
+    if ($_SESSION["statut"] == 'administrateur') {
+
+    ?>
+    <?php
+        } 
+    else {
+        deniedAccess();
+    }
     ?>
 
-
-
-
-<?php 
+<?php
     include('footer.php');
 ?>

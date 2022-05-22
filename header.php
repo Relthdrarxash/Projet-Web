@@ -1,6 +1,8 @@
 <?php session_start(); ?>
 <?php include('fonctions.php'); ?>
-<?php redirect(); ?>
+<?php 
+// Appelle de la fonction redirection pour toutes les pages (si l'utilisateur n'est pas autorisé, il sera redirigé pour toutes les pages du site)
+redirect(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -28,12 +30,11 @@
 	<header>
 		<?php
 		$menu = array(
-			'Index' => array('texte' => 'Menu', 'url' => 'index.php'),
-			'Insertion' => array('texte' => 'Insertion', 'url' => 'insertion.php'),
-			'Modification' => array('texte' => 'Modification', 'url' => 'modification.php'),
-			'Connexion' => array('texte' => 'Connexion', 'url' => 'connexion.php'),
-			'Déconnexion' => array('texte' => 'Déconnexion', 'url' => 'deconnexion.php')
+			'Index' => array('texte' => 'Menu', 'url' => 'index.php', 'statut' => 'all'),
+			'Insertion' => array('texte' => 'Insertion', 'url' => 'insertion.php', 'statut' => 'administrateur'),
+			'Modification' => array('texte' => 'Modification', 'url' => 'modification.php', 'statut' => 'administrateur'),
+			'Connexion' => array('texte' => 'Connexion', 'url' => 'connexion.php', 'statut' => 'all'),
+			'Déconnexion' => array('texte' => 'Déconnexion', 'url' => 'deconnexion.php', 'statut' => 'all')
 		);
 		echo generationMenu($menu); ?>
 	</header>
-	<!-- Fichier à inclure pour faire le header -->
