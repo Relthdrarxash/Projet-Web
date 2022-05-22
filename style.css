@@ -187,3 +187,7 @@ h1 {
     width: 70%;
 }
 
+footer {
+    background-color: #e1d5de;
+    z-index: -1;
+}
