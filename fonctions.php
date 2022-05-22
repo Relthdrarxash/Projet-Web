@@ -1,7 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\NoReturn;
-
 $fileName = explode("/", $_SERVER['SCRIPT_NAME']);
 $fileName = end($fileName);
 
