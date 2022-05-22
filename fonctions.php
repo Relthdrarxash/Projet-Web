@@ -8,7 +8,7 @@ $fileName = end($fileName);
 //##########################Fonctions utilisées###############################
 
 //****************Génération du menu**************************************
-function generationMenu($tableauMenu) : string
+function generationMenu($tableauMenu): string
 {
 	$html = '<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">' . "\n" .
 		'<div class="container-fluid">' . "\n" .
@@ -58,28 +58,27 @@ function generationMenu($tableauMenu) : string
 }
 
 // Récupération du nom de fichier pour la génération du menu en dynamique
-function nomFichier() : string
+function nomFichier(): string
 {
 	$fileName = explode("/", $_SERVER['SCRIPT_NAME']);
 	$pageTitle = explode(".", end($fileName));
 	return ucwords($pageTitle[0]);
 }
 
-function afficheUtilisateur() : string 
+function afficheUtilisateur(): string
 {
-	$html = '<span id="user">'."\n";
+	$html = '<span id="user">' . "\n";
 	if (empty($_SESSION)) {
 		$html .= "Veuillez vous connecter";
+	} else {
+		$html .= 'Bonjour ' . ucwords($_SESSION["login"]);
 	}
-	else {
-		$html .= 'Bonjour '.ucwords($_SESSION["login"]);
-	}
-	$html .=  "\n".'</span';
+	$html .=  "\n" . '</span';
 	return $html;
 }
 
 //****************Connexion de l'utilisateur**************************************
-function connexion($login, $pass) : bool
+function connexion($login, $pass): bool
 {
 	$retour = false;
 
@@ -112,8 +111,31 @@ function connexion($login, $pass) : bool
 	return $retour;
 }
 
+
+
+function logs()
+{
+	$statutConnexion = "échouée";
+	$statut = "";
+	$date = new DateTime();
+	$date = $date->format("d/m/y h:i:s");
+	if (!empty($_SESSION)) {
+		$statutConnexion = "réussie";
+		$statut = $_SESSION["statut"];
+	}
+	// 1 : on ouvre le fichier
+	$monfichier = fopen('logs/access.log', 'a+');
+	// 2 : Ajout des logs
+
+	// {date au format jj/mm/aa} {heure au format hh:mm:ss} : Connexion {échouée|réussie} de {utilisateur} (si réussie : {statut})
+	// PHP_EOL = retour à la ligne
+	fputs($monfichier, "$date : Connexion $statutConnexion de " . $_POST["login"] . ' depuis ' . $_SERVER['REMOTE_ADDR'] . "$statut" . PHP_EOL);
+	// 3 : quand on a fini de l'utiliser, on ferme le fichier
+	fclose($monfichier);
+}
+
 //****************Récupération du statut de l'utilisateur**************************************
-function getStatut($login) : bool
+function getStatut($login): bool
 {
 	include('connexionBDD.php');
 
@@ -136,7 +158,7 @@ function redirect()
 	if ($fileName != "connexion.php" && empty($_SESSION)) {
 		header("Location: /Projet-Web/connexion.php");
 		exit();
-	} 
+	}
 	// Si l'utilisateur est connecté et qu'il est sur connexion.php, alors on le redirige vers l'index
 	else if ($fileName == "connexion.php" && !empty($_SESSION)) {
 		header("Location: /Projet-Web/index.php");
@@ -145,7 +167,7 @@ function redirect()
 }
 
 //****************Déconnexion**************************************
-function deconnexion() 
+function deconnexion()
 {
 	session_start();
 	session_unset(); // == $_SESSION=array()

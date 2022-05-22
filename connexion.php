@@ -41,15 +41,7 @@ include('header.php');
                     echo "</p>\n";
                 }
             }
-
-                // 1 : on ouvre le fichier
-				$monfichier = fopen('logs/access.log', 'a+');
-				// 2 : on fera ici nos opérations sur le fichier...
-				fputs($monfichier,  $_POST['login']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l
-				jS \of F Y h:i:s A'));
-				fputs($monfichier, "\n");
-				// 3 : quand on a fini de l'utiliser, on ferme le fichier
-				fclose($monfichier);
+            logs();
         }
         ?>
 
