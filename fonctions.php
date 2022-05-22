@@ -48,6 +48,9 @@ function generationMenu($tableauMenu) : string
 		$html .= "</li>\n";
 	}
 	$html .= "</ul>\n";
+
+	$html .= afficheUtilisateur();
+
 	$html .= "</div>\n";
 	$html .= "</nav>\n";
 
@@ -60,6 +63,19 @@ function nomFichier() : string
 	$fileName = explode("/", $_SERVER['SCRIPT_NAME']);
 	$pageTitle = explode(".", end($fileName));
 	return ucwords($pageTitle[0]);
+}
+
+function afficheUtilisateur() : string 
+{
+	$html = '<span id="user">'."\n";
+	if (empty($_SESSION)) {
+		$html .= "Veuillez vous connecter";
+	}
+	else {
+		$html .= 'Bonjour '.ucwords($_SESSION["login"]);
+	}
+	$html .=  "\n".'</span';
+	return $html;
 }
 
 //****************Connexion de l'utilisateur**************************************
