@@ -31,6 +31,10 @@ li > .nav-link:hover {
     color: red;
 }
 
+#connexionOk {
+    color: greenyellow;
+}
+
 .wrapper {
     display: flex;
     align-items: center;
