@@ -20,7 +20,7 @@ include('header.php');
 
 
         <?php
-        if($_POST) {
+        if ($_POST) {
             if (
                 empty($_SESSION)
                 && !empty($_POST["connexion"])
@@ -33,15 +33,14 @@ include('header.php');
                     echo "Connexion réussie <br />\n";
                     echo "Redirection...<br />\n";
                     echo "</p>\n";
-                    sleep(2);
-                    redirect();
                 } else {
                     echo '<p id="connexionPasOk">' . "\n";
                     echo "Login/Mot de passe Incorrect\n";
                     echo "</p>\n";
                 }
+                logsConnexion();
+                redirect();
             }
-            logs();
         }
         ?>
 

@@ -109,9 +109,7 @@ function connexion($login, $pass): bool
 	return $retour;
 }
 
-
-
-function logs()
+function logsConnexion()
 {
 	$statutConnexion = "échouée";
 	$statut = "Non Connecté";
@@ -126,9 +124,9 @@ function logs()
 	// 2 : Ajout des logs
 	// {date au format jj/mm/aa} {heure au format hh:mm:ss} : Connexion {échouée|réussie} de {utilisateur} (si réussie : {statut})
 	// PHP_EOL = retour à la ligne
-	fputs($monfichier, "$date : Connexion $statutConnexion de " . $_POST["login"] . ' depuis ' . $_SERVER['REMOTE_ADDR'] . " Statut = $statut" . PHP_EOL);
+	fputs($monfichier, "$date : Connexion $statutConnexion de " . $_POST["login"] . ' depuis ' . $_SERVER['REMOTE_ADDR'] . " Statut = $statut");
 	// 3 : quand on a fini de l'utiliser, on ferme le fichier
-	fclose($monfichier); 
+	fclose($monfichier);
 }
 
 //****************Récupération du statut de l'utilisateur**************************************

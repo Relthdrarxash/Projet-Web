@@ -1,6 +1,6 @@
 <?php session_start(); ?>
 <?php include('fonctions.php'); ?>
-<?php redirect();?>
+<?php redirect(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +8,7 @@
 	<meta charset="utf-8">
 	<title>
 		<?php
-			echo nomFichier();
+		echo nomFichier();
 		?>
 	</title>
 	<link rel="icon" type="image/x-icon" href="img/favicon.ico">
