@@ -23,7 +23,7 @@ function generationMenu($tableauMenu): string
             */
 		$html .= "<li>";
 
-		// Si on n'est pas connecté -> affichage de la page connexion, pas d'affichage de la page connexion, pas d'affichge des pages insertion ou modification
+		// Si on n'est pas connecté -> affichage de la page connexion, pas d'affichage de la page déconnexion, pas d'affichge des pages insertion ou modification
 		if (empty($_SESSION) && $page['statut'] == 'all' && $page['url'] != 'deconnexion.php') {
 			if ($fileName == $page['url']) {
 				// Ici on mettra le lien en active pour qu'il soit mis en évidence
@@ -57,30 +57,6 @@ function generationMenu($tableauMenu): string
 				}
 			}
 		}
-
-
-
-		/*
-		if ($_SESSION && $page['url'] != 'connexion.php') {
-			if ($fileName == $page['url']) {
-				// Ici on mettra le lien en active pour qu'il soit mis en évidence
-				$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-			} else {
-				// Ici on va mettre toutes les autres pages qui seront pas en active du coup
-				$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-			}
-		}
-		// Si on n'est pas connecté, on n'affiche pas la page déconnexion
-		else if (empty($_SESSION) && $page['url'] != 'deconnexion.php') {
-			if ($fileName == $page['url']) {
-				// Ici on mettra le lien en active pour qu'il soit mis en évidence
-				$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-			} else {
-				// Ici on va mettre toutes les autres pages qui seront pas en active du coup
-				$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-			}
-		}
-		*/
 		$html .= "</li>\n";
 	}
 	$html .= "</ul>\n";
