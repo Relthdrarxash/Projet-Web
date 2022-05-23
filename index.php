@@ -1,17 +1,26 @@
 <?php
-    include('header.php'); 
+include('header.php');
+?>
 
-    if ($_SESSION["statut"] == 'administrateur') {
-    ?>
+<section id="infos" class="infos">
+    <!-- my-4 pour la margin en dessous du nav-->
+    <div class="container my-4 content">
 
+        <div class="section-title">
+            <h2>Menu principal</h2>
+        </div>
 
-    <?php
-        ;}
-    else {
-        
-    }
-    ?>
+        <div class="row">
+            <div class="">
+                <img src="images/20220103_154706.jpg" class="img-fluid" alt="">
+            </div>
+            <div class="pt-4 pt-lg-0 content">
+            </div>
+        </div>
 
-<?php 
-    include('footer.php');
+    </div>
+</section>
+
+<?php
+include('footer.php');
 ?>

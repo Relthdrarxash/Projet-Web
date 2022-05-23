@@ -174,6 +174,10 @@ function redirect()
 		header("Location: /Projet-Web/index.php");
 		exit();
 	}
+	else if ($_SESSION["statut"] == 'utilisateur' && ($fileName == "modification.php" || $fileName == "insertion.php")) {
+		header("Location: /Projet-Web/index.php");
+		exit();
+	}
 }
 
 //****************Déconnexion**************************************
@@ -191,3 +195,19 @@ function deniedAccess() {
 	<h1 class="title">Forbidden resource</h1>
 	<p class="text">The server understood the request but refuses to authorize it.</p>';
 }
+
+
+//********************************************************************************
+	function listeCompte()	{ // A faire
+		
+		$retour = false ;	
+		include('connexionBDD.php');
+
+		$requete = 'SELECT Type_mat, Marque, f.NomFournisseur AS Description, Image FROM Materiel AS m INNER JOIN Fournisseur AS f ON f.NomFournisseur = ;';
+		$resultat = $madb->query($requete);
+		if ($resultat) {
+			$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+		}
+		
+		return $retour;
+	}		
