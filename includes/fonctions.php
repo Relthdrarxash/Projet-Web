@@ -174,7 +174,7 @@ function redirect()
 		header("Location: /Projet-Web/index.php");
 		exit();
 	}
-	else if ($_SESSION["statut"] == 'utilisateur' && ($fileName == "modification.php" || $fileName == "insertion.php")) {
+	else if (!empty($_SESSION) && $_SESSION["statut"] == 'utilisateur' && ($fileName == "modification.php" || $fileName == "insertion.php")) {
 		header("Location: /Projet-Web/index.php");
 		exit();
 	}

@@ -1,5 +1,5 @@
 <?php
-include('header.php'); ?>
+include('includes/header.php'); ?>
 
 <?php
 if ($_SESSION["statut"] == 'administrateur') {
@@ -29,5 +29,5 @@ if ($_SESSION["statut"] == 'administrateur') {
 ?>
 
 <?php
-include('footer.php');
+include('includes/footer.php');
 ?>

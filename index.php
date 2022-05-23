@@ -1,5 +1,5 @@
 <?php
-include('header.php');
+include('includes/header.php');
 ?>
 
 <section id="infos" class="infos">
@@ -22,5 +22,5 @@ include('header.php');
 </section>
 
 <?php
-include('footer.php');
+include('includes/footer.php');
 ?>
