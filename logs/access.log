@@ -23,8 +23,7 @@
 23/05/22 12:57:05 : Connexion réussie de quentin depuis 127.0.0.1 Statut = administrateur
 23/05/22 01:07:15 : Connexion réussie de quentin depuis 127.0.0.1 Statut = administrateur
 23/05/22 01:09:46 : Connexion réussie de Jean depuis 127.0.0.1 Statut = utilisateur
-23/05/22 06:13:23 : Connexion réussie de mathys depuis 127.0.0.1 Statut = administrateur 
-
+23/05/22 06:13:23 : Connexion réussie de mathys depuis 127.0.0.1 Statut = administrateur
 23/05/22 06:14:17 : Connexion réussie de mathys depuis 127.0.0.1 Statut = administrateur
 23/05/22 06:21:33 : Connexion réussie de mathys depuis 127.0.0.1 Statut = administrateur
 23/05/22 06:55:07 : Connexion réussie de Jean depuis 127.0.0.1 Statut = utilisateur
@@ -33,3 +32,5 @@
 23/05/22 08:44:13 : Connexion réussie de Jean depuis 127.0.0.1 Statut = utilisateur
 23/05/22 08:47:37 : Connexion réussie de Jean depuis 127.0.0.1 Statut = utilisateur
 23/05/22 08:56:11 : Connexion réussie de Jean depuis 127.0.0.1 Statut = utilisateur
+24/05/22 01:59:45 : Connexion échouée de quentin depuis 127.0.0.1 Statut = Non Connecté
+24/05/22 02:00:36 : Connexion réussie de quentin@compta.fr depuis 127.0.0.1 Statut = administrateur

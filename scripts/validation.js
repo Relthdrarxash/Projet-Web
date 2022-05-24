@@ -1,8 +1,11 @@
-function EtTaFonctionJS() {
-    var msg; 
-    var str = document.getElementById("mdp").value; 
-   
-    if (str.match( /[A-Z]/g) && str.match(/^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/)) 
-            msg = "<p style='color:green'>Authentification réussie</p>";      
-       return True;
+function validationMDP() {
+    var str = document.getElementById("login").value;
+    if (str.match(/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/g) ) {
+        etatConnexion = true;
+    } else {
+        document.getElementById('etatConnexion').innerHTML = "Login invalide";
+        document.getElementById('etatConnexion').className = "mdpInvalide"
+        etatConnexion = false;
+    }
+    return etatConnexion;
 }
