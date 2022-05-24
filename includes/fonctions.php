@@ -6,7 +6,7 @@ $fileName = end($fileName);
 //##########################Fonctions utilisées###############################
 
 //****************Génération du menu**************************************
-function generationMenu($tableauMenu): string
+function generationMenu($tableauMenu)
 {
 	$html = '<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">' . "\n" .
 		'<div class="container-fluid">' . "\n" .
@@ -32,7 +32,7 @@ function generationMenu($tableauMenu): string
 				// Ici on va mettre toutes les autres pages qui seront pas en active du coup
 				$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
 			}
-		} 
+		}
 		// Si on est connecté -> On teste si on est un utilisateur ou un admin
 		else {
 			// Si utilisateur -> pas d'affichage des pages insertion et modification
@@ -44,8 +44,7 @@ function generationMenu($tableauMenu): string
 					// Ici on va mettre toutes les autres pages qui seront pas en active du coup
 					$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
 				}
-			}
-			else if (!empty($_SESSION) && $_SESSION["statut"] == 'administrateur' && $page['url'] != 'connexion.php'){
+			} else if (!empty($_SESSION) && $_SESSION["statut"] == 'administrateur' && $page['url'] != 'connexion.php') {
 				if ($_SESSION && $page['url'] != 'connexion.php') {
 					if ($fileName == $page['url']) {
 						// Ici on mettra le lien en active pour qu'il soit mis en évidence
@@ -70,14 +69,14 @@ function generationMenu($tableauMenu): string
 }
 
 // Récupération du nom de fichier pour la génération du menu en dynamique
-function nomFichier(): string
+function nomFichier()
 {
 	$fileName = explode("/", $_SERVER['SCRIPT_NAME']);
 	$pageTitle = explode(".", end($fileName));
 	return ucwords($pageTitle[0]);
 }
 
-function afficheUtilisateur(): string
+function afficheUtilisateur()
 {
 	$html = '<span id="user">' . "\n";
 	if (empty($_SESSION)) {
@@ -90,7 +89,7 @@ function afficheUtilisateur(): string
 }
 
 //****************Connexion de l'utilisateur**************************************
-function connexion($login, $pass): bool
+function connexion($login, $pass)
 {
 	$retour = false;
 
@@ -139,13 +138,13 @@ function logsConnexion()
 	// 2 : Ajout des logs
 	// {date au format jj/mm/aa} {heure au format hh:mm:ss} : Connexion {échouée|réussie} de {utilisateur} (si réussie : {statut})
 	// PHP_EOL = retour à la ligne
-	fputs($monfichier, "$date : Connexion $statutConnexion de " . $_POST["login"] . ' depuis ' . $_SERVER['REMOTE_ADDR'] . " Statut = $statut".PHP_EOL);
+	fputs($monfichier, "$date : Connexion $statutConnexion de " . $_POST["login"] . ' depuis ' . $_SERVER['REMOTE_ADDR'] . " Statut = $statut" . PHP_EOL);
 	// 3 : quand on a fini de l'utiliser, on ferme le fichier
 	fclose($monfichier);
 }
 
 //****************Récupération du statut de l'utilisateur**************************************
-function getStatut($login): bool
+function getStatut($login)
 {
 	include('connexionBDD.php');
 
@@ -166,16 +165,15 @@ function redirect()
 	$fileName = end($fileName);
 	// On redirige vers la page connexion.php si l'utilisateur n'est pas connecté
 	if ($fileName != "connexion.php" && empty($_SESSION)) {
-		header("Location: /Projet-Web/connexion.php");
+		header("Location: connexion.php");
 		exit();
 	}
 	// Si l'utilisateur est connecté et qu'il est sur connexion.php, alors on le redirige vers l'index
 	else if ($fileName == "connexion.php" && !empty($_SESSION)) {
-		header("Location: /Projet-Web/index.php");
+		header("Location: index.php");
 		exit();
-	}
-	else if (!empty($_SESSION) && $_SESSION["statut"] == 'utilisateur' && ($fileName == "modification.php" || $fileName == "insertion.php")) {
-		header("Location: /Projet-Web/index.php");
+	} else if (!empty($_SESSION) && $_SESSION["statut"] == 'utilisateur' && ($fileName == "modification.php" || $fileName == "insertion.php")) {
+		header("Location: index.php");
 		exit();
 	}
 }
@@ -190,7 +188,8 @@ function deconnexion()
 }
 
 //****************Affichage Accès refusé**************************************
-function deniedAccess() {
+function deniedAccess()
+{
 	echo '<p class="text">Welcome to 403:</p>
 	<h1 class="title">Forbidden resource</h1>
 	<p class="text">The server understood the request but refuses to authorize it.</p>';
@@ -198,16 +197,17 @@ function deniedAccess() {
 
 
 //********************************************************************************
-	function listeCompte()	{ // A faire
-		
-		$retour = false ;	
-		include('connexionBDD.php');
+function listeCompte()
+{ // A faire
 
-		$requete = 'SELECT Type_mat, Marque, f.NomFournisseur AS Description, Image FROM Materiel AS m INNER JOIN Fournisseur AS f ON f.NomFournisseur = ;';
-		$resultat = $madb->query($requete);
-		if ($resultat) {
-			$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
-		}
-		
-		return $retour;
-	}		
+	$retour = false;
+	include('connexionBDD.php');
+
+	$requete = 'SELECT Type_mat, Marque, f.NomFournisseur AS Description, Image FROM Materiel AS m INNER JOIN Fournisseur AS f ON f.NomFournisseur = ;';
+	$resultat = $madb->query($requete);
+	if ($resultat) {
+		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	return $retour;
+}

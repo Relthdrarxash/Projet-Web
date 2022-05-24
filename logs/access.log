@@ -36,3 +36,6 @@
 24/05/22 02:00:36 : Connexion réussie de quentin@compta.fr depuis 127.0.0.1 Statut = administrateur
 24/05/22 02:14:17 : Connexion réussie de quentin@compta.fr depuis 127.0.0.1 Statut = administrateur
 24/05/22 02:17:21 : Connexion réussie de quentin@compta.fr depuis 127.0.0.1 Statut = administrateur
+24/05/22 02:22:29 : Connexion réussie de Jean depuis 127.0.0.1 Statut = utilisateur
+24/05/22 02:22:42 : Connexion échouée de jean depuis 127.0.0.1 Statut = Non Connecté
+24/05/22 02:22:48 : Connexion échouée de Jean depuis 127.0.0.1 Statut = Non Connecté
