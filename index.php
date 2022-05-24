@@ -11,11 +11,6 @@ include('includes/header.php');
         </div>
 
         <div class="row">
-            <div class="">
-                <img src="images/20220103_154706.jpg" class="img-fluid" alt="">
-            </div>
-            <div class="pt-4 pt-lg-0 content">
-            </div>
         </div>
 
     </div>
