@@ -13,12 +13,22 @@ if ($_SESSION["statut"] == 'administrateur') {
             </div>
 
             <div class="row">
-                <div class="">
-                    <img src="images/20220103_154706.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="pt-4 pt-lg-0 content">
-                </div>
+                <article>
+                    <?php
+                    afficheFormulaireAjoutUtilisateur();
+                    if (!empty($_SESSION) && !empty($_POST) && isset($_POST["mail"]) && isset($_POST["pass"]) && isset($_POST["status"]) && isset($_POST["rue"]) && isset($_POST["ville_etu"])) {
+                        try {
+                            $res = ajoutUtilisateur($_POST["mail"], $_POST["pass"], $_POST["rue"], $_POST["ville_etu"], $_POST["status"]);
+                            echo "L'utilisateur a bien été inséré";
+                        } catch (Exception $e) {
+                            echo "Erreur, l'utlisateur n'a pas été inséré";
+                        }
+                        afficheTableau(listeCompte());
+                    }
+                    ?>
+                </article>
             </div>
+        </div>
 
         </div>
     </section>

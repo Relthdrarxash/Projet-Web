@@ -79,10 +79,12 @@ function nomFichier()
 function afficheUtilisateur()
 {
 	$html = '<span id="user">' . "\n";
+	// On récupère le prénom depuis l'@ mail de l'utilisateur
+	$username = explode("@", $_SESSION["login"]);
 	if (empty($_SESSION)) {
 		$html .= "Veuillez vous connecter";
 	} else {
-		$html .= 'Bonjour ' . ucwords($_SESSION["login"]);
+		$html .= 'Bonjour ' . ucwords($username[0]);
 	}
 	$html .=  "\n" . '</span';
 	return $html;
@@ -210,4 +212,45 @@ function listeCompte()
 	}
 
 	return $retour;
+}
+
+//*******************************Affichage insertion*************************************************
+
+
+
+function ajoutUtilisateur($mail,$pass,$rue,$insee,$status){
+	/* on récupère directement le code de la ville qui a été transmis dans l'attribut value de la balise <option> du formulaire
+	Il n'est donc pas nécessaire de rechercher le code INSEE de la ville*/
+	$retour=0;
+	$madb = new PDO('sqlite:bdd/IUT.sqlite'); 	
+	// filtrer les paramètres		
+	$mail = $madb->quote($mail);
+	$pass = $madb->quote($pass);
+	$rue = $madb->quote($rue);
+	$insee = $madb->quote($insee);
+	$status = $madb->quote($status);
+	// requête
+	//INSERT INTO utilisateurs VALUES ('test@test', 'pass', 'rue dskjfsdj', '22113' , 'Prof' );
+	$requete = " INSERT INTO utilisateurs VALUES ($mail, $pass, $rue, $insee , $status );  ";
+	$resultat = $madb->exec($requete);	
+	if ($resultat == false ) 
+		$retour = 0;
+	else 
+		$retour = $resultat;
+	return $retour;
+}
+
+
+function afficheTableau($tab){
+	echo '<table>';	
+	echo '<tr>';// les entetes des colonnes qu'on lit dans le premier tableau par exemple
+	foreach($tab[0] as $colonne=>$valeur){		echo "<th>$colonne</th>";		}
+	echo "</tr>\n";
+	// le corps de la table
+	foreach($tab as $ligne){
+		echo '<tr>';
+		foreach($ligne as $cellule)		{		echo "<td>$cellule</td>";		}
+		echo "</tr>\n";
+	}
+	echo '</table>';
 }
