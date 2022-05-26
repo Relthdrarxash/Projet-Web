@@ -1,5 +1,6 @@
 <?php session_start(); ?>
-<?php include('includes/fonctions.php'); ?>
+<?php include('includes/fonctions.php'); 
+	  include('includes/formulaires.php')?>
 <?php 
 // Appelle de la fonction redirection pour toutes les pages (si l'utilisateur n'est pas autorisé, il sera redirigé pour toutes les pages du site)
 redirect(); ?>

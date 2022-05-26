@@ -7,7 +7,7 @@ include('includes/header.php');
     <div class="container my-4 content">
 
         <div class="section-title">
-            <h2>Menu principal</h2>
+            <h1>Menu principal</h1>
         </div>
 
         <div class="row">

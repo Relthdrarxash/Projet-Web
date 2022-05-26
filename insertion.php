@@ -9,14 +9,16 @@ if ($_SESSION["statut"] == 'administrateur') {
         <div class="container my-4 content">
 
             <div class="section-title">
-                <h2>Menu principal</h2>
+                <h1>
+                    Insertion d'un nouveau matériel
+                </h1>
             </div>
-
+            <?php var_dump($_POST); ?>
             <div class="row">
                 <article>
                     <?php
-                    afficheFormulaireAjoutUtilisateur();
-                    if (!empty($_SESSION) && !empty($_POST) && isset($_POST["mail"]) && isset($_POST["pass"]) && isset($_POST["status"]) && isset($_POST["rue"]) && isset($_POST["ville_etu"])) {
+                    afficheFormulaireInsertion();
+                    if (!empty($_SESSION) && !empty($_POST) && isset($_POST["type_mat"]) && isset($_POST["fournisseur"]) && isset($_POST["description"]) && isset($_POST["nom_image"])) {
                         try {
                             $res = ajoutUtilisateur($_POST["mail"], $_POST["pass"], $_POST["rue"], $_POST["ville_etu"], $_POST["status"]);
                             echo "L'utilisateur a bien été inséré";
@@ -28,8 +30,6 @@ if ($_SESSION["statut"] == 'administrateur') {
                     ?>
                 </article>
             </div>
-        </div>
-
         </div>
     </section>
 <?php

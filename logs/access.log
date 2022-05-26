@@ -4,3 +4,9 @@
 24/05/22 02:51:09 : Connexion réussie de jean@client.fr depuis 127.0.0.1 Statut = utilisateur
 24/05/22 02:51:22 : Connexion réussie de quentin@admin.fr depuis 127.0.0.1 Statut = administrateur
 24/05/22 02:53:04 : Connexion réussie de quentin@admin.fr depuis 127.0.0.1 Statut = administrateur
+26/05/22 10:41:25 : Connexion échouée de mathys depuis 127.0.0.1 Statut = Non Connecté
+26/05/22 10:41:31 : Connexion réussie de mathys@admin.fr depuis 127.0.0.1 Statut = administrateur
+26/05/22 11:15:31 : Connexion échouée de mathys@admin.fr depuis 127.0.0.1 Statut = Non Connecté
+26/05/22 11:15:36 : Connexion réussie de mathys@admin.fr depuis 127.0.0.1 Statut = administrateur
+26/05/22 11:26:55 : Connexion réussie de mathys@admin.fr depuis 127.0.0.1 Statut = administrateur
+27/05/22 12:01:21 : Connexion réussie de mathys@admin.fr depuis 127.0.0.1 Statut = administrateur

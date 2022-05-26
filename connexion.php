@@ -1,5 +1,10 @@
 <?php
 include('includes/header.php');
+
+// Utiliser un captcha
+// Vérifier que le nom de l'image respecte le bon format xxx.yyy, ptet le yyy dans png ou jpg ou jpeg
+
+
 ?>
 
 <div class="wrapper">

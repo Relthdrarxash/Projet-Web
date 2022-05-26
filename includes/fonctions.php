@@ -4,70 +4,6 @@ $fileName = explode("/", $_SERVER['SCRIPT_NAME']);
 $fileName = end($fileName);
 
 //##########################Fonctions utilisées###############################
-
-//****************Génération du menu**************************************
-function generationMenu($tableauMenu)
-{
-	$html = '<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">' . "\n" .
-		'<div class="container-fluid">' . "\n" .
-		'<ul class="navbar-nav me-auto mb-2 mb-lg-0">' . "\n";
-	// On récupère le nom de fichier pour le mettre en évidence avec le "active" de Bootstrap
-	$fileName = explode("/", $_SERVER['SCRIPT_NAME']);
-	$fileName = end($fileName);
-	// Décommenter pour vérifier le nom du fichier
-	// echo end($fileName);
-	// Le code html du contenu est stocké dans la variable html
-	foreach ($tableauMenu as $page) {
-		/* On peut ptet s'éviter de faire deux fois le même test si on met le active dans un if
-             En mode <a class="nav-link "<?php if ($_SERVER['PHP_SELF'] == $page['url']) echo 'active';?href='{$page['url']}'>{$page['texte']}</a>\n";
-            */
-		$html .= "<li>";
-
-		// Si on n'est pas connecté -> affichage de la page connexion, pas d'affichage de la page déconnexion, pas d'affichge des pages insertion ou modification
-		if (empty($_SESSION) && $page['statut'] == 'all' && $page['url'] != 'deconnexion.php') {
-			if ($fileName == $page['url']) {
-				// Ici on mettra le lien en active pour qu'il soit mis en évidence
-				$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-			} else if ($page['url'] != 'deconnexion.php') {
-				// Ici on va mettre toutes les autres pages qui seront pas en active du coup
-				$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-			}
-		}
-		// Si on est connecté -> On teste si on est un utilisateur ou un admin
-		else {
-			// Si utilisateur -> pas d'affichage des pages insertion et modification
-			if (!empty($_SESSION) && $_SESSION["statut"] == 'utilisateur' && $page['statut'] == 'all' && $page['url'] != 'connexion.php') {
-				if ($fileName == $page['url']) {
-					// Ici on mettra le lien en active pour qu'il soit mis en évidence
-					$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-				} else {
-					// Ici on va mettre toutes les autres pages qui seront pas en active du coup
-					$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-				}
-			} else if (!empty($_SESSION) && $_SESSION["statut"] == 'administrateur' && $page['url'] != 'connexion.php') {
-				if ($_SESSION && $page['url'] != 'connexion.php') {
-					if ($fileName == $page['url']) {
-						// Ici on mettra le lien en active pour qu'il soit mis en évidence
-						$html .= '<a class="nav-link active mr px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-					} else {
-						// Ici on va mettre toutes les autres pages qui seront pas en active du coup
-						$html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
-					}
-				}
-			}
-		}
-		$html .= "</li>\n";
-	}
-	$html .= "</ul>\n";
-
-	$html .= afficheUtilisateur();
-
-	$html .= "</div>\n";
-	$html .= "</nav>\n";
-
-	return $html;
-}
-
 // Récupération du nom de fichier pour la génération du menu en dynamique
 function nomFichier()
 {
@@ -160,6 +96,19 @@ function getStatut($login)
 	return $retour;
 }
 
+//****************Récupération des différents fournisseurs**************************************
+function recupFournisseur()
+{
+	include('connexionBDD.php');
+	$requete = "SELECT NomFournisseur FROM Fournisseur;";
+	$resultat = $BDD->query($requete);
+	$resRequete = $resultat->fetchAll(PDO::FETCH_ASSOC);
+	if ($resRequete) {
+		$retour = $resRequete;
+	}
+	return $retour;
+}
+
 //****************Redirection des pages**************************************
 function redirect()
 {
@@ -214,15 +163,11 @@ function listeCompte()
 	return $retour;
 }
 
-//*******************************Affichage insertion*************************************************
-
-
-
-function ajoutUtilisateur($mail,$pass,$rue,$insee,$status){
-	/* on récupère directement le code de la ville qui a été transmis dans l'attribut value de la balise <option> du formulaire
-	Il n'est donc pas nécessaire de rechercher le code INSEE de la ville*/
-	$retour=0;
-	$madb = new PDO('sqlite:bdd/IUT.sqlite'); 	
+//*******************************Execution de l'insertion*************************************************
+function insertion($mail, $pass, $rue, $insee, $status)
+{
+	$retour = 0;
+	$madb = new PDO('sqlite:bdd/IUT.sqlite');
 	// filtrer les paramètres		
 	$mail = $madb->quote($mail);
 	$pass = $madb->quote($pass);
@@ -232,24 +177,29 @@ function ajoutUtilisateur($mail,$pass,$rue,$insee,$status){
 	// requête
 	//INSERT INTO utilisateurs VALUES ('test@test', 'pass', 'rue dskjfsdj', '22113' , 'Prof' );
 	$requete = " INSERT INTO utilisateurs VALUES ($mail, $pass, $rue, $insee , $status );  ";
-	$resultat = $madb->exec($requete);	
-	if ($resultat == false ) 
+	$resultat = $madb->exec($requete);
+	if ($resultat == false)
 		$retour = 0;
-	else 
+	else
 		$retour = $resultat;
 	return $retour;
 }
 
 
-function afficheTableau($tab){
-	echo '<table>';	
-	echo '<tr>';// les entetes des colonnes qu'on lit dans le premier tableau par exemple
-	foreach($tab[0] as $colonne=>$valeur){		echo "<th>$colonne</th>";		}
+function afficheTableau($tab)
+{
+	echo '<table>';
+	echo '<tr>'; // les entetes des colonnes qu'on lit dans le premier tableau par exemple
+	foreach ($tab[0] as $colonne => $valeur) {
+		echo "<th>$colonne</th>";
+	}
 	echo "</tr>\n";
 	// le corps de la table
-	foreach($tab as $ligne){
+	foreach ($tab as $ligne) {
 		echo '<tr>';
-		foreach($ligne as $cellule)		{		echo "<td>$cellule</td>";		}
+		foreach ($ligne as $cellule) {
+			echo "<td>$cellule</td>";
+		}
 		echo "</tr>\n";
 	}
 	echo '</table>';
