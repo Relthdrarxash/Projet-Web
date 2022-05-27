@@ -148,14 +148,14 @@ function deniedAccess()
 
 
 //********************************************************************************
-function listeCompte()
-{ // A faire
+function listeMateriel()
+{
 
 	$retour = false;
 	include('connexionBDD.php');
 
-	$requete = 'SELECT Type_mat, Marque, f.NomFournisseur AS Description, Image FROM Materiel AS m INNER JOIN Fournisseur AS f ON f.NomFournisseur = ;';
-	$resultat = $madb->query($requete);
+	$requete = 'SELECT Type_mat, Marque, f.NomFournisseur AS Description, Image FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
+	$resultat = $BDD->query($requete);
 	if ($resultat) {
 		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -164,7 +164,7 @@ function listeCompte()
 }
 
 //*******************************Execution de l'insertion*************************************************
-function insertion($mail, $pass, $rue, $insee, $status)
+function insertion($type, $fournisseur, $description, $insee, $status)
 {
 	$retour = 0;
 	$madb = new PDO('sqlite:bdd/IUT.sqlite');

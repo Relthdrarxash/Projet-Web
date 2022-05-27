@@ -11,6 +11,11 @@ include('includes/header.php');
         </div>
 
         <div class="row">
+            <?php
+                // Afficher les images dans la fonction affiche tableau
+                // Mettre un tableau qui utilise 6 colonnes bootstrap 
+                afficheTableau(listeMateriel());
+            ?>
         </div>
 
     </div>
