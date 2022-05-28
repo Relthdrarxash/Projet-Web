@@ -37,6 +37,9 @@ if ($_SESSION["statut"] == 'administrateur') {
                         else if (!preg_match("@(.*/)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$@", $_POST["nom_image"])) {
                             echo "Format de nom de fichier invalide";
                         } 
+                        else if (!is_numeric($_POST["prix"])){
+                            echo "Erreur du format du prix";
+                        }
                         else {
                             try {
                                 $res = insertion($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["nom_image"], $_POST["prix"]);

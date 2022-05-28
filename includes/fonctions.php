@@ -194,9 +194,11 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 	include('connexionBDD.php');
 	// filtrer les paramètres		
 	$type = $BDD->quote($type);
+	$marque = $BDD->quote($marque);
 	$fournisseur = $BDD->quote($fournisseur);
 	$description = $BDD->quote($description);
 	$nom_image = $BDD->quote($nom_image);
+
 	// requête
 	$requeteMateriel = "INSERT INTO Materiel(type_mat, marque, description, image) VALUES ($type, $marque, $description, $nom_image);";
 	$resultatMateriel = $BDD->exec($requeteMateriel);
@@ -219,9 +221,9 @@ function getIdFournisseur($fournisseur)
 	$requete = "SELECT NoFournisseur FROM Fournisseur WHERE NomFournisseur = $fournisseur";
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
-		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
-	return $retour;
+	return $retour["NoFournisseur"];
 }
 
 function getIdMateriel($description)
@@ -231,7 +233,7 @@ function getIdMateriel($description)
 	$requete = "SELECT NoMateriel FROM Materiel WHERE Description = $description";
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
-		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
-	return $retour;
+	return $retour["NoMateriel"];
 }
