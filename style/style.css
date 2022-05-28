@@ -249,6 +249,7 @@ table
   /* Enlève les bordures extérieures */
   border-radius: 15px;
   height: 20vh;
+  width: 30vh;
 }
 
 th

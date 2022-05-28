@@ -13,7 +13,6 @@ if ($_SESSION["statut"] == 'administrateur') {
                     Nouveau matériel
                 </h1>
             </div>
-            <?php var_dump($_POST); ?>
             <div class="row">
                 <article>
                     <?php
@@ -29,25 +28,17 @@ if ($_SESSION["statut"] == 'administrateur') {
                     ) {
                         // ^[a-zA-Z ]*$ pour matcher un texte et éviter des problèmes de stockage dans la BDD
                         // Ptet mettre une taille max
-                        if (!preg_match("/^[a-zA-Z ]*$/", $_POST["description"])) {
-                            echo "Description non valide";
+                        try {
+                            $res = insertion($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["nom_image"], $_POST["prix"]);
+                            echo "L'utilisateur a bien été inséré";
+                        } catch (Exception $e) {
+                            echo "Erreur : $e";
                         }
-                        // (.*/)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$ pour matcher un nom d'image
-                        // les @ au début et à la fin sont les délimiteurs du regex (comme # et /)
-                        else if (!preg_match("@(.*/)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$@", $_POST["nom_image"])) {
-                            echo "Format de nom de fichier invalide";
-                        } 
-                        else if (!is_numeric($_POST["prix"])){
-                            echo "Erreur du format du prix";
-                        }
-                        else {
-                            try {
-                                $res = insertion($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["nom_image"], $_POST["prix"]);
-                                echo "L'utilisateur a bien été inséré";
-                            } catch (Exception $e) {
-                                echo "Erreur : $e";
-                            }
-                        }
+                    ?>
+
+                        <p id="res_insertion"></p>
+
+                    <?php
                         afficheTableau(listeMateriel());
                     }
                     ?>

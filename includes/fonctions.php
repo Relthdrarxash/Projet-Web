@@ -141,9 +141,8 @@ function deconnexion()
 //****************Affichage Accès refusé**************************************
 function deniedAccess()
 {
-	echo '<p class="text">Welcome to 403:</p>
-	<h1 class="title">Forbidden resource</h1>
-	<p class="text">The server understood the request but refuses to authorize it.</p>';
+	header('Location: index.php');
+	exit;
 }
 
 
@@ -154,7 +153,7 @@ function listeMateriel()
 	$retour = false;
 	include('connexionBDD.php');
 
-	$requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
+	$requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
 		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
@@ -178,7 +177,11 @@ function afficheTableau($tab)
 		foreach ($ligne as $entete => $cellule) {
 			if ($entete == "Image") {
 				echo '<td><img class="image_table" src="img/' . $cellule . '" alt="' . $cellule . '"/></td>';
-			} else {
+			} 
+			else if ($entete == "Prix") {
+				echo "<td>$cellule €</td>";
+			}
+			else {
 				echo "<td>$cellule</td>";
 			}
 		}

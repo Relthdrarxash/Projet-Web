@@ -11,13 +11,28 @@ On vérifie que le type de matériel
 */
 
 function validationMateriel() {
-    var str = document.getElementById("nom_val").value;
-    if (str.match(/	^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g) ) {
-        etatConnexion = true;
-    } else {
-        document.getElementById('etatConnexion').innerHTML = "Login invalide";
-        document.getElementById('etatConnexion').className = "mdpInvalide"
+    var description = document.getElementById("id_description").value;
+    var marque = document.getElementById("id_marque").value;
+    var prix = document.getElementById("id_prix").value;
+    var nom_image = document.getElementById("id_nom_image").value
+    if (!description.match("/^[a-zA-Z ]*$/g")) {
+        document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
         etatConnexion = false;
+    }
+    else if (!marque.match("/^[a-zA-Z ]*$/g")) {
+        document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
+        etatConnexion = false;
+    }
+    else if (!nom_image.match("/(.*/)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$/g")) {
+        document.getElementById('res_insertion').innerHTML = "Erreur du nom de fichier de l'image";
+        etatConnexion = false;
+    }
+    else if (isNaN(prix)) {
+        document.getElementById('res_insertion').innerHTML = "Erreur du nom de fichier de l'image";
+        etatConnexion = false;
+    }
+    else {
+        etatConnexion = true;
     }
     return etatConnexion;
 }
