@@ -1,10 +1,10 @@
-<footer class="footer position-fixed fixed-bottom">
+<footer class="footer">
     <div class="row mt-5">
         <div class="col-md-12 text-center">
             <span class="text-muted">
                 Copyright ©<script>
                     document.write(new Date().getFullYear());
-                </script> - All rights reserved
+                </script> - All rights reserved 
                 <a href="javascript:history.back()">Retour à la page précédente</a>
             </span>
         </div>

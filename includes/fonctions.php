@@ -16,10 +16,10 @@ function afficheUtilisateur()
 {
 	$html = '<span id="user">' . "\n";
 	// On récupère le prénom depuis l'@ mail de l'utilisateur
-	$username = explode("@", $_SESSION["login"]);
 	if (empty($_SESSION)) {
 		$html .= "Veuillez vous connecter";
 	} else {
+		$username = explode("@", $_SESSION["login"]);
 		$html .= 'Bonjour ' . ucwords($username[0]);
 	}
 	$html .=  "\n" . '</span';
@@ -154,34 +154,12 @@ function listeMateriel()
 	$retour = false;
 	include('connexionBDD.php');
 
-	$requete = 'SELECT Type_mat, Marque, f.NomFournisseur AS Description, Image FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
+	$requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
 		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	return $retour;
-}
-
-//*******************************Execution de l'insertion*************************************************
-function insertion($type, $fournisseur, $description, $insee, $status)
-{
-	$retour = 0;
-	$madb = new PDO('sqlite:bdd/IUT.sqlite');
-	// filtrer les paramètres		
-	$mail = $madb->quote($mail);
-	$pass = $madb->quote($pass);
-	$rue = $madb->quote($rue);
-	$insee = $madb->quote($insee);
-	$status = $madb->quote($status);
-	// requête
-	//INSERT INTO utilisateurs VALUES ('test@test', 'pass', 'rue dskjfsdj', '22113' , 'Prof' );
-	$requete = " INSERT INTO utilisateurs VALUES ($mail, $pass, $rue, $insee , $status );  ";
-	$resultat = $madb->exec($requete);
-	if ($resultat == false)
-		$retour = 0;
-	else
-		$retour = $resultat;
 	return $retour;
 }
 
@@ -197,10 +175,63 @@ function afficheTableau($tab)
 	// le corps de la table
 	foreach ($tab as $ligne) {
 		echo '<tr>';
-		foreach ($ligne as $cellule) {
-			echo "<td>$cellule</td>";
+		foreach ($ligne as $entete => $cellule) {
+			if ($entete == "Image") {
+				echo '<td><img class="image_table" src="img/' . $cellule . '" alt="' . $cellule . '"/></td>';
+			} else {
+				echo "<td>$cellule</td>";
+			}
 		}
 		echo "</tr>\n";
 	}
 	echo '</table>';
+}
+
+//*******************************Execution de l'insertion*************************************************
+function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix)
+{
+	$retour = 0;
+	include('connexionBDD.php');
+	// filtrer les paramètres		
+	$type = $BDD->quote($type);
+	$fournisseur = $BDD->quote($fournisseur);
+	$description = $BDD->quote($description);
+	$nom_image = $BDD->quote($nom_image);
+	// requête
+	$requeteMateriel = "INSERT INTO Materiel(type_mat, marque, description, image) VALUES ($type, $marque, $description, $nom_image);";
+	$resultatMateriel = $BDD->exec($requeteMateriel);
+	// ajout du matériel associé à un fournisseur dans la table propose
+	$idFournisseur = getIdFournisseur($fournisseur);
+	$idMateriel = getIdMateriel($description);
+	$requetePropose = "INSERT INTO Propose VALUES($idMateriel, $idFournisseur, $prix)";
+	$resultatPropose = $BDD->exec($requetePropose);
+	if ($resultatMateriel == false && $resultatPropose == false)
+		$retour = 0;
+	else
+		$retour = array($resultatMateriel, $resultatPropose);
+	return $retour;
+}
+
+function getIdFournisseur($fournisseur)
+{
+	include('connexionBDD.php');
+	// $fournisseur est déjà protégé
+	$requete = "SELECT NoFournisseur FROM Fournisseur WHERE NomFournisseur = $fournisseur";
+	$resultat = $BDD->query($requete);
+	if ($resultat) {
+		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+	}
+	return $retour;
+}
+
+function getIdMateriel($description)
+{
+	include('connexionBDD.php');
+	// On utilise la description car elle est différente pour toutes les valeurs	
+	$requete = "SELECT NoMateriel FROM Materiel WHERE Description = $description";
+	$resultat = $BDD->query($requete);
+	if ($resultat) {
+		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+	}
+	return $retour;
 }

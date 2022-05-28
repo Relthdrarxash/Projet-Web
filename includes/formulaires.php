@@ -71,7 +71,7 @@ function afficheFormulaireInsertion()
     $types = array('serveur', 'écran', 'accessoire', 'portable', 'station');
     $fournisseurs = recupFournisseur();
 ?>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="insertion">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="insertion" onsubmit="validationMateriel();">
         <fieldset>
             <label for="id_type_mat">Type du matériel :</label>
             <select id="id_type_mat" name="type_mat" size="1">
@@ -89,7 +89,9 @@ function afficheFormulaireInsertion()
                 }
                 ?>
             </select> <br />
+            <label for="id_rue">Marque : </label><input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" /><br />
             <label for="id_rue">Description : </label><input type="text" name="description" id="id_description" placeholder="Description" required size="20" /><br />
+            <label for="id_prix">Prix :</label><input for="id_prix" name="prix" type="number" min="1" step="any" required /><br />
             <label for="id_rue">Nom de l'image : </label><input type="text" name="nom_image" id="id_nom_image" placeholder="image.png" required size="6" />
             <input type="submit" value="Insérer" />
         </fieldset>

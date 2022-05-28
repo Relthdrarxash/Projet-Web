@@ -4,8 +4,14 @@ il aurait été plus judicieux de faire ce test lors de l'insertion d'une array
 Nous avons donc décidé de faire un test lors de l'insertion d'un matériel
 */
 
-function validationMDP() {
-    var str = document.getElementById("login").value;
+
+/*
+On vérifie que le type de matériel 
+
+*/
+
+function validationMateriel() {
+    var str = document.getElementById("nom_val").value;
     if (str.match(/	^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g) ) {
         etatConnexion = true;
     } else {

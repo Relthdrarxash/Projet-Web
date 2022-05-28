@@ -10,7 +10,7 @@ include('includes/header.php');
             <h1>Menu principal</h1>
         </div>
 
-        <div class="row">
+        <div class="row mx-1 text-center" >
             <?php
                 // Afficher les images dans la fonction affiche tableau
                 // Mettre un tableau qui utilise 6 colonnes bootstrap 
