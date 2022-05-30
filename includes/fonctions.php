@@ -100,7 +100,7 @@ function getStatut($login)
 function recupFournisseur()
 {
 	include('connexionBDD.php');
-	$requete = "SELECT NomFournisseur FROM Fournisseur ORDER BY NomFournisseur ASC;";
+	$requete = "SELECT NomFournisseur FROM Fournisseur;";
 	$resultat = $BDD->query($requete);
 	$resRequete = $resultat->fetchAll(PDO::FETCH_ASSOC);
 	if ($resRequete) {
@@ -177,9 +177,11 @@ function afficheTableau($tab)
 		foreach ($ligne as $entete => $cellule) {
 			if ($entete == "Image") {
 				echo '<td><img class="image_table" src="img/' . $cellule . '" alt="' . $cellule . '"/></td>';
-			} else if ($entete == "Prix") {
+			} 
+			else if ($entete == "Prix") {
 				echo "<td>$cellule €</td>";
-			} else {
+			}
+			else {
 				echo "<td>$cellule</td>";
 			}
 		}
@@ -218,7 +220,7 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 function getIdFournisseur($fournisseur)
 {
 	include('connexionBDD.php');
-	// $fournisseur est déjà protégé dans insertion
+	// $fournisseur est déjà protégé
 	$requete = "SELECT NoFournisseur FROM Fournisseur WHERE NomFournisseur = $fournisseur";
 	$resultat = $BDD->query($requete);
 	if ($resultat) {

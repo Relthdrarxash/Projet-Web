@@ -15,6 +15,22 @@ include('includes/header.php');
                 // Afficher les images dans la fonction affiche tableau
                 // Mettre un tableau qui utilise 6 colonnes bootstrap 
                 afficheTableau(listeMateriel());
+
+                var_dump($_GET);
+                
+                if (!empty($_GET) && isset($_GET['type_mat'])){
+                    
+
+                    $tab=afficherTableauParType($_GET['type_mat']);
+                    if ($tab) afficheTableau($tab);
+                    
+                    
+                }
+                
+
+
+
+
             ?>
         </div>
 

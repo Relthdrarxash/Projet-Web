@@ -213,11 +213,11 @@ body {
 }
 
 
-.Valide {
+.mdpValide {
   color: greenyellow;
 }
 
-.Invalide {
+.mdpInvalide {
   color: red;
 }
 
