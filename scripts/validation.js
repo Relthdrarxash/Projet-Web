@@ -14,6 +14,7 @@ function validationMateriel() {
     var description = document.getElementById("id_description").value;
     var marque = document.getElementById("id_marque").value;
     var prix = document.getElementById("id_prix").value;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     var nom_image = document.getElementById("id_nom_image").value
     if (!description.match("/^[a-zA-Z ]*$/g")) {
@@ -43,6 +44,18 @@ function validationMateriel() {
 
     else if (!nom_image.match("/(.*)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$/g")) {
 >>>>>>> Stashed changes
+=======
+    var nom_image = document.getElementById("id_nom_image").value
+    if (!description.match("/^[a-zA-Z ]*$/g")) {
+        document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
+        etatConnexion = false;
+    }
+    else if (!marque.match("/^[a-zA-Z ]*$/g")) {
+        document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
+        etatConnexion = false;
+    }
+    else if (!nom_image.match("/(.*/)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$/g")) {
+>>>>>>> 321a6246df5b8f108ef3e42bff27d058ac1f150c
         document.getElementById('res_insertion').innerHTML = "Erreur du nom de fichier de l'image";
         etatConnexion = false;
     }
