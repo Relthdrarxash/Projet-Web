@@ -12,7 +12,7 @@ include('includes/header.php');
         <!-- Icon -->
         <div class="first">
             <img src="img/mamazon.png" id="icon" alt="Mamazon" />
-            <h1>Connexion</h1>
+            <h1>Se Connecter</h1>
         </div>
 
         <!-- Login Form -->
@@ -20,7 +20,7 @@ include('includes/header.php');
             <!-- Si un formulaire a déjà été rempli, on conserve le login mais pas le mot de passe -->
             <input type="text" id="login" class="second" name="login" placeholder="username" value="<?php if (isset($_POST["login"])) echo $_POST["login"]; ?>">
             <input type="password" id="password" class="third" name="password" placeholder="password">
-            <input type="submit" class="fourth" value="Log In" name="connexion">
+            <input type="submit" class="fourth" value="Connexion" name="connexion">
         </form>
 
         <p id="etatConnexion">

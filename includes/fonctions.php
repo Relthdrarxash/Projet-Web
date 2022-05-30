@@ -177,11 +177,9 @@ function afficheTableau($tab)
 		foreach ($ligne as $entete => $cellule) {
 			if ($entete == "Image") {
 				echo '<td><img class="image_table" src="img/' . $cellule . '" alt="' . $cellule . '"/></td>';
-			} 
-			else if ($entete == "Prix") {
+			} else if ($entete == "Prix") {
 				echo "<td>$cellule €</td>";
-			}
-			else {
+			} else {
 				echo "<td>$cellule</td>";
 			}
 		}

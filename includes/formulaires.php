@@ -73,7 +73,7 @@ function afficheFormulaireInsertion()
     sort($types);
     $fournisseurs = recupFournisseur();
 ?>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="insertion" onsubmit="validationMateriel();">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="insertion" onsubmit="return validationMateriel();">
         <fieldset>
             <label for="id_type_mat">Type du matériel :</label>
             <select id="id_type_mat" name="type_mat" size="1">

@@ -4,7 +4,7 @@
             <span class="text-muted">
                 Copyright ©<script>
                     document.write(new Date().getFullYear());
-                </script> - All rights reserved 
+                </script> - All rights reserved
                 <a href="javascript:history.back()">Retour à la page précédente</a>
             </span>
         </div>
