@@ -11,23 +11,23 @@ On vérifie que le type de matériel
 */
 
 function validationMateriel() {
+    console.log("t");
     var description = document.getElementById("id_description").value;
     var marque = document.getElementById("id_marque").value;
     var prix = document.getElementById("id_prix").value;
 
     var nom_image = document.getElementById("id_nom_image").value;
-    var etatConnexion = false;
+    var etatConnexion = true;
     document.getElementById('res_insertion').className = " Invalide";
-
-    if (!description.match("/^[A-Za-z0-9 _.,!'$ ]*/g")) {
-        document.getElementById('res_insertion').innerHTML = "Marque invalide, veuillez n'entrer que des caractères simples";
-        etatConnexion = false;
-    }
-    else if (!marque.match("/^[a-zA-Z ]*$/g")) {
+    if (!/^[A-Za-z0-9 _.,!'$ ]*/g.test(description)) {
         document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
         etatConnexion = false;
     }
-    else if (!nom_image.match("/(.*/)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$/g")) {
+    else if (!/^[A-z ]*$/g.test(marque)) {
+        document.getElementById('res_insertion').innerHTML = "Marque invalide, veuillez n'entrer que des caractères simples";
+        etatConnexion = false;
+    }
+    else if (!/(.*\/)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$/g.test(nom_image)) {
         document.getElementById('res_insertion').innerHTML = "Erreur du nom de fichier de l'image";
         etatConnexion = false;
     }

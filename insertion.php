@@ -17,6 +17,7 @@ if ($_SESSION["statut"] == 'administrateur') {
                 <article>
                     <?php
                     afficheFormulaireInsertion();
+                    ?><p id="res_insertion"></p><?php
                     if (
                         !empty($_SESSION)
                         && !empty($_POST)
@@ -36,7 +37,7 @@ if ($_SESSION["statut"] == 'administrateur') {
                         }
                     ?>
 
-                        <p id="res_insertion"></p>
+                        
 
                     <?php
                         afficheTableau(listeMateriel());
