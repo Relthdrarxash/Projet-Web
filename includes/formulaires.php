@@ -93,7 +93,7 @@ function afficheFormulaireInsertion()
             <label for="id_marque">Description : </label><input type="text" name="description" id="id_description" placeholder="Description" required size="20" /><br />
             <label for="id_prix">Prix :</label><input for="id_prix" name="prix" type="number" min="1" step="any" required /><br />
             <label for="id_nom_image">Nom de l'image : </label><input type="text" name="nom_image" id="id_nom_image" placeholder="image.png" required size="6" />
-            <input type="submit" value="Insérer" />
+            <div onclick=""><input type="submit" value="Insérer" /></div>
         </fieldset>
     </form>
 <?php

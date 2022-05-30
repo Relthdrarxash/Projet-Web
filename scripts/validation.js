@@ -14,23 +14,44 @@ function validationMateriel() {
     var description = document.getElementById("id_description").value;
     var marque = document.getElementById("id_marque").value;
     var prix = document.getElementById("id_prix").value;
+<<<<<<< Updated upstream
     var nom_image = document.getElementById("id_nom_image").value
     if (!description.match("/^[a-zA-Z ]*$/g")) {
         document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
+=======
+    var nom_image = document.getElementById("id_nom_image").value;
+    var etatConnexion = false;
+    document.getElementById('res_insertion').className = " Invalide";
+
+    if (!description.match("/^[A-Za-z0-9 _.,!'$ ]*/g")) {
+        document.getElementById('res_insertion').innerHTML = "Marque invalide, veuillez n'entrer que des caractères simples";
+>>>>>>> Stashed changes
         etatConnexion = false;
     }
+<<<<<<< Updated upstream
     else if (!marque.match("/^[a-zA-Z ]*$/g")) {
+=======
+
+    else if (!marque.match("/^[A-Za-z0-9 _.,!'$ ]*/g")) {
+>>>>>>> Stashed changes
         document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
         etatConnexion = false;
     }
+<<<<<<< Updated upstream
     else if (!nom_image.match("/(.*/)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$/g")) {
+=======
+
+    else if (!nom_image.match("/(.*)*.+\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP|JPEG)$/g")) {
+>>>>>>> Stashed changes
         document.getElementById('res_insertion').innerHTML = "Erreur du nom de fichier de l'image";
         etatConnexion = false;
     }
+
     else if (isNaN(prix)) {
         document.getElementById('res_insertion').innerHTML = "Erreur du nom de fichier de l'image";
         etatConnexion = false;
     }
+    
     else {
         etatConnexion = true;
     }
