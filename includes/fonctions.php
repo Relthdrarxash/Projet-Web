@@ -100,7 +100,7 @@ function getStatut($login)
 function recupFournisseur()
 {
 	include('connexionBDD.php');
-	$requete = "SELECT NomFournisseur FROM Fournisseur;";
+	$requete = "SELECT NomFournisseur FROM Fournisseur ORDER BY NomFournisseur ASC;";
 	$resultat = $BDD->query($requete);
 	$resRequete = $resultat->fetchAll(PDO::FETCH_ASSOC);
 	if ($resRequete) {
@@ -220,7 +220,7 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 function getIdFournisseur($fournisseur)
 {
 	include('connexionBDD.php');
-	// $fournisseur est déjà protégé
+	// $fournisseur est déjà protégé dans insertion
 	$requete = "SELECT NoFournisseur FROM Fournisseur WHERE NomFournisseur = $fournisseur";
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
