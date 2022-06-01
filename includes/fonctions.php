@@ -100,7 +100,7 @@ function getStatut($login)
 function recupFournisseur()
 {
 	include('connexionBDD.php');
-	$requete = "SELECT NomFournisseur FROM Fournisseur;";
+	$requete = "SELECT NomFournisseur FROM Fournisseur ORDER BY NomFournisseur ASC;";
 	$resultat = $BDD->query($requete);
 	$resRequete = $resultat->fetchAll(PDO::FETCH_ASSOC);
 	if ($resRequete) {

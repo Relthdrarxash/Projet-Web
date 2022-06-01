@@ -77,7 +77,8 @@ function afficheFormulaireInsertion()
             <select id="id_type_mat" name="type_mat" size="1">
                 <?php
                 foreach ($types as $type) {
-                    echo '<option value="' . $type . '">' . $type . '</option>';
+                    echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
+                    // ucwords pour mettre la première lettre en majuscule
                 }
                 ?>
             </select> <br />
