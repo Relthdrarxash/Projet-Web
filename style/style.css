@@ -227,7 +227,7 @@ body {
   min-height: 84.5vh;
   background-color: #ffffff;
   border-radius: 25px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .table {

@@ -23,7 +23,7 @@ function validationMateriel() {
         document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
         etatConnexion = false;
     }
-    else if (!/^[A-z ]*$/g.test(marque)) {
+    else if (!/^[A-z'-_ ]*$/g.test(marque)) {
         document.getElementById('res_insertion').innerHTML = "Marque invalide, veuillez n'entrer que des caractères simples";
         etatConnexion = false;
     }
@@ -32,7 +32,7 @@ function validationMateriel() {
         etatConnexion = false;
     }
     else if (isNaN(prix)) {
-        document.getElementById('res_insertion').innerHTML = "Erreur du nom de fichier de l'image";
+        document.getElementById('res_insertion').innerHTML = "Prix incorrect";
         etatConnexion = false;
     }
     
