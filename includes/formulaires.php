@@ -94,6 +94,9 @@ function afficheFormulaireInsertion()
             <label for="id_prix">Prix :</label><input id="id_prix" name="prix" type="number" min="1" step="any" required /><br />
             <label for="id_nom_image">Nom de l'image : </label><input type="text" name="nom_image" id="id_nom_image" placeholder="image.png" required size="6" />
             <div onclick=""><input type="submit" value="Insérer" /></div>
+            <input type="text" name="captcha"/>
+			<input type="submit" name="submit" value="Submit"/>
+			<img src="image.php" onclick="this.src='image.php?' + Math.random();" alt="captcha" style="cursor:pointer;">
         </fieldset>
     </form>
 <?php
