@@ -96,7 +96,7 @@ function afficheFormulaireInsertion()
             <div onclick=""><input type="submit" value="Insérer" /></div>
             <input type="text" name="captcha"/>
 			<input type="submit" name="submit" value="Submit"/>
-			<img src="image.php" onclick="this.src='image.php?' + Math.random();" alt="captcha" style="cursor:pointer;">
+			<img src="includes/image.php" onclick="this.src='includes/image.php?' + Math.random();" alt="captcha" style="cursor:pointer;">
         </fieldset>
     </form>
 <?php

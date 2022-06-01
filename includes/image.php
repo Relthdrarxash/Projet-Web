@@ -31,3 +31,4 @@
 	imagepng($image);
 	//puis on détruit l'image pour libérer de l'espace
 	imagedestroy($image);
+?>
