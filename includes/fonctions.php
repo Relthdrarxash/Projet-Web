@@ -242,7 +242,7 @@ function getIdMateriel($description)
 }
 
 
-function modification($type, $marque, $fournisseur)
+function modification($type, $marque, $fournisseur,$prix)
 {
 	$retour = 0;
 	include('connexionBDD.php');
@@ -252,9 +252,9 @@ function modification($type, $marque, $fournisseur)
 	$fournisseur = $BDD->quote($fournisseur);
 
 	// requête
-	$requeteMateriel = "UPDATE Materiel set (type_mat, marque, description, image) VALUES ($type, $marque, $fournisseur);";
+	$requeteMateriel = "UPDATE Materiel set (type_mat, marque, description, image) VALUES ($type, $marque, $fournisseur,$prix);";
 	$resultatMateriel = $BDD->exec($requeteMateriel);
-	// ajout du matériel associé à un fournisseur dans la table propose
+	// modif du matériel associé à un fournisseur dans la table propose
 	$idFournisseur = getIdFournisseur($fournisseur);
 	$idMateriel = getIdMateriel($description);
 	$requetePropose = "UPDATE Propose set (noMateriel, noFournisseur, prix) VALUES($idMateriel, $idFournisseur, $prix)";

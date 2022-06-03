@@ -24,6 +24,7 @@ if ($_SESSION["statut"] == 'administrateur') {
 
                         <?php
                         if ($_SESSION["statut"] == 'administrateur') {
+                            afficheFormulaireChoixMarque();
 
                             afficheFormulaireModification();
                             ?><p id="res_modification"></p><?php

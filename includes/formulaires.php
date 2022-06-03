@@ -187,9 +187,38 @@ function afficheFormulaireModification()
                 ?>
             </select> <br />
             <label for="id_marque">Marque : </label><input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" /><br />
+            <label for="id_prix">Prix :</label><input id="id_prix" name="prix" type="number" min="1" step="any" required /><br />
             <div onclick=""><input type="submit" value="Modifier" /></div>
+            
         </fieldset>
     </form>
 <?php
     echo "<br/>";
 } // fin afficheFormulairModification
+
+function afficheFormulaireChoixMarque($choix){
+    $madb = new PDO('sqlite:bdd/bdd.sqlite'); 
+    $requete = "SELECT marque FROM Materiel;";
+    $resultat = $madb->query($requete);
+    if($resultat){
+        $titres = $resultat->fetchAll(PDO::FETCH_ASSOC);			
+    }
+?>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <fieldset> 
+        <label for="id_marque">Marque :</label> 
+        <select id="id_marque" name="marque" size="1">
+            <?php
+                foreach($titres as $titre){
+                    echo '<option>'.$titre["marque"].'</option>';
+                }
+            ?>
+        </select>
+        <?php
+        if($choix=='Modifier'){
+            echo '<input type="submit" value="Modifier" name="choix"/>';
+        }
+    }
+        ?>
+    </fieldset>
+</form>
