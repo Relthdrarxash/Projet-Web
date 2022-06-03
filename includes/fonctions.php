@@ -240,3 +240,28 @@ function getIdMateriel($description)
 	}
 	return $retour["NoMateriel"];
 }
+
+
+function modification($type, $marque, $fournisseur)
+{
+	$retour = 0;
+	include('connexionBDD.php');
+	// filtrer les paramètres		
+	$type = $BDD->quote($type);
+	$marque = $BDD->quote($marque);
+	$fournisseur = $BDD->quote($fournisseur);
+
+	// requête
+	$requeteMateriel = "UPDATE Materiel set (type_mat, marque, description, image) VALUES ($type, $marque, $fournisseur);";
+	$resultatMateriel = $BDD->exec($requeteMateriel);
+	// ajout du matériel associé à un fournisseur dans la table propose
+	$idFournisseur = getIdFournisseur($fournisseur);
+	$idMateriel = getIdMateriel($description);
+	$requetePropose = "UPDATE Propose set (noMateriel, noFournisseur, prix) VALUES($idMateriel, $idFournisseur, $prix)";
+	$resultatPropose = $BDD->exec($requetePropose);
+	if ($resultatMateriel == false && $resultatPropose == false)
+		$retour = 0;
+	else
+		$retour = array($resultatMateriel, $resultatPropose);
+	return $retour;
+}

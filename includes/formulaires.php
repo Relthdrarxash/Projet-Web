@@ -159,3 +159,37 @@ function afficherTableauParType()
 <?php
     echo "<br/>";
 }
+
+
+function afficheFormulaireModification()
+{
+    // on note les différents types pour en faire un menu dropdown
+    $types = array('accessoire', 'écran', 'portable', 'serveur', 'station');
+    $fournisseurs = recupFournisseur();
+?>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="insertion" onsubmit="return validationMateriel();">
+        <fieldset>
+            <label for="id_type_mat">Type du matériel :</label>
+            <select id="id_type_mat" name="type_mat" size="1">
+                <?php
+                foreach ($types as $type) {
+                    echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
+                    // ucwords pour mettre la première lettre en majuscule
+                }
+                ?>
+            </select> <br />
+            <label for="id_fournisseur">Fournisseur :</label>
+            <select id="id_fournisseur" name="fournisseur" size="1">
+                <?php
+                foreach ($fournisseurs as $fournisseur) {
+                    echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
+                }
+                ?>
+            </select> <br />
+            <label for="id_marque">Marque : </label><input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" /><br />
+            <div onclick=""><input type="submit" value="Modifier" /></div>
+        </fieldset>
+    </form>
+<?php
+    echo "<br/>";
+} // fin afficheFormulairModification
