@@ -282,3 +282,8 @@ td img {
   width: 20vh;
   height: auto;
 }
+
+
+#captcha {
+  width: 40vh ;
+}

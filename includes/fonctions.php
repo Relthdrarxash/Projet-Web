@@ -153,7 +153,7 @@ function listeMateriel()
 	$retour = false;
 	include('connexionBDD.php');
 
-	$requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
+	$requete = 'SELECT m.NoMateriel AS "Id", Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
 		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
@@ -241,8 +241,17 @@ function getIdMateriel($description)
 	return $retour["NoMateriel"];
 }
 
+function listeIdMateriel() {
+	include('connexionBDD.php');
+	$requete = "SELECT NoMateriel FROM Materiel";
+	$resultat = $BDD->query($requete);
+	if ($resultat) {
+		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+	}
+	return $retour;
+}
 
-function modification($type, $marque, $fournisseur,$prix)
+function modification($type, $marque, $fournisseur,$description,$prix)
 {
 	$retour = 0;
 	include('connexionBDD.php');

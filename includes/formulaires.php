@@ -90,14 +90,21 @@ function afficheFormulaireInsertion()
                 }
                 ?>
             </select> <br />
-            <label for="id_marque">Marque : </label><input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" /><br />
-            <label for="id_marque">Description : </label><input type="text" name="description" id="id_description" placeholder="Description" required size="20" /><br />
-            <label for="id_prix">Prix :</label><input id="id_prix" name="prix" type="number" min="1" step="any" required /><br />
-            <label for="id_nom_image">Nom de l'image : </label><input type="text" name="nom_image" id="id_nom_image" placeholder="image.png" required size="6" />
-            <div onclick=""><input type="submit" value="Insérer" /></div>
-            <input type="text" name="captcha"/>
-			<input type="submit" name="submit" value="Submit"/>
-			<img src="includes/image.php" onclick="this.src='includes/image.php?' + Math.random();" alt="captcha" style="cursor:pointer;">
+            <label for="id_marque">Marque : </label>
+            <input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" /><br />
+
+            <label for="id_marque">Description : </label>
+            <input type="text" name="description" id="id_description" placeholder="Description" required size="20" /><br />
+
+            <label for="id_prix">Prix :</label>
+            <input id="id_prix" name="prix" type="number" min="1" step="any" required /><br />
+
+            <label for="id_nom_image">Nom de l'image : </label>
+            <input type="text" name="nom_image" id="id_nom_image" placeholder="image.png" required size="6" />
+
+            <input type="text" name="captcha" id="captcha" /> <br />
+            <input type="submit" name="submit" value="Submit" />
+            <img src="includes/image.php" onclick="this.src='includes/image.php?' + Math.random();" alt="captcha" style="cursor:pointer;">
         </fieldset>
     </form>
 <?php
@@ -107,16 +114,16 @@ function afficheFormulaireInsertion()
 function afficherTableauParType()
 {
 
-    $madb = new PDO('sqlite:bdd/IUT.sqlite');
+    include('connexionBDD.php');
     $requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
-    $resultat = $madb->query($requete);
+    $resultat = $BDD->query($requete);
     $tableau_assoc = $resultat->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
         <fieldset>
 
-            
+
             <label for="customRange2" class="form-label">Example range</label>
             <input type="range" class="form-range" min="0" max="5" id="customRange2">
             <label for="id_prix">Prix :</label>
@@ -132,47 +139,82 @@ function afficherTableauParType()
         </fieldset>
     </form>
 
-            <label for="id_marque">Marque :</label>
-            <select id="id_marque" name="marque" size="1" onclick='listeMateriel()'>
-                <option value="0">Choisir une marque</option>
-                <?php
-                foreach ($tableau_assoc as $ligne) {
-                    echo '<option value="' . $ligne["Type Mat"] . '">' . $ligne["Marque"] . " " . $ligne["Description"] . " " . $ligne["Prix"] . " " . $ligne["Nom fournisseur"] . " </option>" . "\n";
-                }
-                ?>
+    <label for="id_marque">Marque :</label>
+    <select id="id_marque" name="marque" size="1" onclick='listeMateriel()'>
+        <option value="0">Choisir une marque</option>
+        <?php
+        foreach ($tableau_assoc as $ligne) {
+            echo '<option value="' . $ligne["Type Mat"] . '">' . $ligne["Marque"] . " " . $ligne["Description"] . " " . $ligne["Prix"] . " " . $ligne["Nom fournisseur"] . " </option>" . "\n";
+        }
+        ?>
     </select>
     </fieldset>
     </form>
 
 
-            <label for="id_type_mat">Type du matériel :</label>
-            <select id="id_type_mat" name="type_mat" size="1" onclick='listeMateriel()'>
-                <option value="0">Choisir un Type</option>
-                <?php
-                foreach ($tableau_assoc as $ligne) {
-                   echo '<option value="' . $ligne["Type Mat"] . '">' . $ligne["Marque"] . " " . $ligne["Description"] . " " . $ligne["Prix"] . " " . $ligne["Nom fournisseur"] . " </option>" . "\n";
-                }
-                ?>
-            </select>
-        </fieldset>
+    <label for="id_type_mat">Type du matériel :</label>
+    <select id="id_type_mat" name="type_mat" size="1" onclick='listeMateriel()'>
+        <option value="0">Choisir un Type</option>
+        <?php
+        foreach ($tableau_assoc as $ligne) {
+            echo '<option value="' . $ligne["Type Mat"] . '">' . $ligne["Marque"] . " " . $ligne["Description"] . " " . $ligne["Prix"] . " " . $ligne["Nom fournisseur"] . " </option>" . "\n";
+        }
+        ?>
+    </select>
+    </fieldset>
     </form>
 <?php
     echo "<br/>";
 }
 
-
-function afficheFormulaireModification()
+function afficheFormulaireIdMateriel()
 {
+    $tab = listeIdMateriel();
+?>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="select_id_mat">
+        <fieldset>
+
+            <label for="id_mat">Sélectionner le numéro du matériel :</label>
+            <select id="id_mat" name="id_mat" size="1">
+                <?php
+                foreach ($tab as $id) {
+                    echo '<option value="' . $id["NoMateriel"] . '">' . $id["NoMateriel"] . '</option>';
+                }
+                ?>
+            </select> <br />
+            <input type="submit" name="submit" />
+        </fieldset>
+    </form>
+<?php
+}
+
+
+function afficheFormulaireModification($id)
+{
+    include('connexionBDD.php');
+
+    $requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE m.NoMateriel = ' . $id . ';';
+    $resultat = $BDD->query($requete);
+    $materiel = $resultat->fetch(PDO::FETCH_ASSOC);
+    var_dump($materiel);   
+
     // on note les différents types pour en faire un menu dropdown
     $types = array('accessoire', 'écran', 'portable', 'serveur', 'station');
     $fournisseurs = recupFournisseur();
-?>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="insertion" onsubmit="return validationMateriel();">
+    ?>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="modification" onsubmit="return validationMateriel();">
         <fieldset>
             <label for="id_type_mat">Type du matériel :</label>
             <select id="id_type_mat" name="type_mat" size="1">
                 <?php
                 foreach ($types as $type) {
+                    if ($materiel['Insee'] == $utilisateur['Insee']) {
+						echo '<option value="' . $ville["Insee"] . '" selected>' . $ville["Commune"] . '</option>';
+					} else {
+						echo '<option value="' . $ville["Insee"] . '">' . $ville["Commune"] . '</option>';
+					}
+
+
                     echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
                     // ucwords pour mettre la première lettre en majuscule
                 }
@@ -186,39 +228,14 @@ function afficheFormulaireModification()
                 }
                 ?>
             </select> <br />
-            <label for="id_marque">Marque : </label><input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" /><br />
-            <label for="id_prix">Prix :</label><input id="id_prix" name="prix" type="number" min="1" step="any" required /><br />
+            <label for="id_marque">Marque : </label>
+            <input type="text" name="marque" id="id_marque" required size="6" value="<?= $materiel["Marque"]; ?>" /><br />
+            <label for="id_prix">Prix (en €):</label>
+            <input id="id_prix" name="prix" type="number" min="1" step="any" required value="<?= $materiel  ['Prix']; ?>" /><br />
             <div onclick=""><input type="submit" value="Modifier" /></div>
-            
+
         </fieldset>
     </form>
 <?php
     echo "<br/>";
 } // fin afficheFormulairModification
-
-function afficheFormulaireChoixMarque($choix){
-    $madb = new PDO('sqlite:bdd/bdd.sqlite'); 
-    $requete = "SELECT marque FROM Materiel;";
-    $resultat = $madb->query($requete);
-    if($resultat){
-        $titres = $resultat->fetchAll(PDO::FETCH_ASSOC);			
-    }
-?>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-    <fieldset> 
-        <label for="id_marque">Marque :</label> 
-        <select id="id_marque" name="marque" size="1">
-            <?php
-                foreach($titres as $titre){
-                    echo '<option>'.$titre["marque"].'</option>';
-                }
-            ?>
-        </select>
-        <?php
-        if($choix=='Modifier'){
-            echo '<input type="submit" value="Modifier" name="choix"/>';
-        }
-    }
-        ?>
-    </fieldset>
-</form>

@@ -31,7 +31,7 @@ if ($_SESSION["statut"] == 'administrateur') {
                         // Ptet mettre une taille max
                         try {
                             $res = insertion($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["nom_image"], $_POST["prix"]);
-                            echo "L'utilisateur a bien été inséré";
+                            echo "L'entrée a bien été inséré";
                         } catch (Exception $e) {
                             echo "Erreur : $e";
                         }
