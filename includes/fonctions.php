@@ -236,7 +236,6 @@ function getIdMateriel($description)
 	// echo '<p>'.var_dump($resultat).'</p>';
 	if ($resultat) {
 		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
-		echo '<p>' . var_dump($retour) . '</p>';
 	}
 	return $retour["NoMateriel"];
 }
@@ -265,10 +264,7 @@ function modification($type, $marque, $fournisseur, $description, $prix, $idMate
 	$description = $BDD->quote($description);
 	$idFournisseur = getIdFournisseur($fournisseur);
 
-	var_dump($idFournisseur);
-	echo PHP_EOL;
-	var_dump($idMateriel);
-	echo PHP_EOL;
+
 	// requête pour la table matériel
 	/*
 	UPDATE Materiel 
