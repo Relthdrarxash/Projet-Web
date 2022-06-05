@@ -77,30 +77,47 @@ function afficheFormulaireInsertion()
             <select id="id_type_mat" name="type_mat" size="1">
                 <?php
                 foreach ($types as $type) {
-                    echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
+                    if (isset($_POST['type_mat'])) {
+                        if ($type == $_POST['type_mat']) {
+                            echo '<option value="' . $type . '" selected>' . ucwords($type) . '</option>';
+                        }
+                        else {
+                            echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
+                        }
+                    } else {
+                        echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
+                    }
                     // ucwords pour mettre la première lettre en majuscule
                 }
                 ?>
             </select> <br />
             <label for="id_fournisseur">Fournisseur :</label>
-            <select id="id_fournisseur" name="fournisseur" size="1">
+            <select id="id_fournisseur" name="fournisseur" size="1" value="<?php if (isset($_POST['fournisseur'])) echo $_POST['fournisseur'] ?>">
                 <?php
                 foreach ($fournisseurs as $fournisseur) {
-                    echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
+                    if (isset($_POST['fournisseur'])) {
+                        if ($fournisseur["NomFournisseur"] == $_POST['fournisseur']) {
+                            echo '<option value="' . $fournisseur["NomFournisseur"] . '" selected>' . $fournisseur["NomFournisseur"] . '</option>';
+                        } else {
+                            echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
+                        }
+                    } else {
+                        echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
+                    }
                 }
                 ?>
             </select> <br />
             <label for="id_marque">Marque : </label>
-            <input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" /><br />
+            <input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" value="<?php if (isset($_POST['marque'])) echo $_POST['marque'] ?>" /><br />
 
             <label for="id_marque">Description : </label>
-            <input type="text" name="description" id="id_description" placeholder="Description" required size="20" /><br />
+            <input type="text" name="description" id="id_description" placeholder="Description" required size="20" value="<?php if (isset($_POST['description'])) echo $_POST['description'] ?>" /><br />
 
             <label for="id_prix">Prix :</label>
-            <input id="id_prix" name="prix" type="number" min="1" step="any" required /><br />
+            <input id="id_prix" name="prix" type="number" min="1" step="any" required value="<?php if (isset($_POST['prix'])) echo $_POST['prix'] ?>" /><br />
 
             <label for="id_nom_image">Nom de l'image : </label>
-            <input type="text" name="nom_image" id="id_nom_image" placeholder="image.png" required size="6" />
+            <input type="text" name="nom_image" id="id_nom_image" placeholder="image.png" required size="6" value="<?php if (isset($_POST['nom_image'])) echo $_POST['nom_image'] ?>" />
 
             <input type="text" name="captcha" id="captcha" /> <br />
             <input type="submit" name="submit" value="Submit" />
@@ -183,8 +200,7 @@ function afficheFormulaireIdMateriel()
                 foreach ($tab as $id) {
                     if (isset($selection) && $id["NoMateriel"] == $selection) {
                         echo '<option value="' . $id["NoMateriel"] . '" selected >' . $id["NoMateriel"] . '</option>';
-                    }
-                    else {
+                    } else {
                         echo '<option value="' . $id["NoMateriel"] . '">' . $id["NoMateriel"] . '</option>';
                     }
                 }
@@ -203,12 +219,12 @@ function afficheFormulaireModification($id)
 
     $requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE m.NoMateriel = ' . $id . ';';
     $resultat = $BDD->query($requete);
-    $materiel = $resultat->fetch(PDO::FETCH_ASSOC);   
+    $materiel = $resultat->fetch(PDO::FETCH_ASSOC);
 
     // on note les différents types pour en faire un menu dropdown
     $types = array('accessoire', 'écran', 'portable', 'serveur', 'station');
     $fournisseurs = recupFournisseur();
-    ?>
+?>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="modification" onsubmit="return validationMateriel();">
         <fieldset>
             <label for="id_type_mat">Type du matériel :</label>
@@ -216,10 +232,10 @@ function afficheFormulaireModification($id)
                 <?php
                 foreach ($types as $type) {
                     if ($materiel["Type de matériel"] == $type) {
-						echo '<option value="' . $type . '" selected>' .  ucwords($type) . '</option>';
-					} else {
-						echo '<option value="' . $type . '">' .  ucwords($type) . '</option>';
-					}
+                        echo '<option value="' . $type . '" selected>' .  ucwords($type) . '</option>';
+                    } else {
+                        echo '<option value="' . $type . '">' .  ucwords($type) . '</option>';
+                    }
                 }
                 ?>
             </select> <br />
@@ -228,9 +244,8 @@ function afficheFormulaireModification($id)
                 <?php
                 foreach ($fournisseurs as $fournisseur) {
                     if ($fournisseur["NomFournisseur"] == $materiel["Vendu par"]) {
-                        echo '<option value="' . $fournisseur["NomFournisseur"]. '" selected>' . $fournisseur["NomFournisseur"] . '</option>';                        
-                    }
-                    else {
+                        echo '<option value="' . $fournisseur["NomFournisseur"] . '" selected>' . $fournisseur["NomFournisseur"] . '</option>';
+                    } else {
                         echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
                     }
                 }
@@ -244,7 +259,7 @@ function afficheFormulaireModification($id)
             <input type="text" name="description" id="id_description" required size="10" value="<?= $materiel["Description"]; ?>" /><br />
 
             <label for="id_prix">Prix (en €):</label>
-            <input id="id_prix" name="prix" type="number" min="1" step="any" required value="<?= $materiel  ['Prix']; ?>" /><br />
+            <input id="id_prix" name="prix" type="number" min="1" step="any" required value="<?= $materiel['Prix']; ?>" /><br />
 
             <input type="hidden" name="id_mat" value="<?= $_POST["id_mat"]; ?>" />
 

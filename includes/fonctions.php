@@ -193,12 +193,14 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 {
 	$retour = 0;
 	include('connexionBDD.php');
-	// filtrer les paramètres		
+	// filtrer et protéger les paramètres	
+	// on protège également les paramètres issus d'une sélection car ils pourraient être issus d'une modification de la requête 
+	// via une interception (ex : BurpSuite)
 	$type = $BDD->quote($type);
-	$marque = $BDD->quote($marque);
+	$marque = $BDD->quote(htmlentities($marque, 0, "UTF-8"));
 	$fournisseur = $BDD->quote($fournisseur);
-	$description = $BDD->quote($description);
-	$nom_image = $BDD->quote($nom_image);
+	$description = $BDD->quote(htmlentities($description, 0, "UTF-8"));
+	$nom_image = $BDD->quote(htmlentities($nom_image, 0, "UTF-8"));
 
 	// requête
 	$requeteMateriel = "INSERT INTO Materiel(type_mat, marque, description, image) VALUES ($type, $marque, $description, $nom_image);";
@@ -224,6 +226,7 @@ function getIdFournisseur($fournisseur)
 	if ($resultat) {
 		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
+	var_dump($retour);	
 	return $retour["NoFournisseur"];
 }
 
@@ -257,11 +260,14 @@ function modification($type, $marque, $fournisseur, $description, $prix, $idMate
 
 	include('connexionBDD.php');
 
-	// filtrer les paramètres		
+	// filtrer les paramètres
+	// on protège également les paramètres issus d'une sélection car ils pourraient être issus d'une modification de la requête 
+	// via une interception (ex : BurpSuite)
+	// htmlentities décode en ISO-8859-1 par défaut donc pose problème pour les accents
 	$type = $BDD->quote($type);
-	$marque = $BDD->quote($marque);
+	$marque = $BDD->quote(htmlentities($marque, 0, "UTF-8"));
 	$fournisseur = $BDD->quote($fournisseur);
-	$description = $BDD->quote($description);
+	$description = $BDD->quote(htmlentities($description, 0, "UTF-8"));
 	$idFournisseur = getIdFournisseur($fournisseur);
 
 
