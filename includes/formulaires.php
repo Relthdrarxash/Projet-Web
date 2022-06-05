@@ -169,6 +169,9 @@ function afficherTableauParType()
 
 function afficheFormulaireIdMateriel()
 {
+    if (!empty($_POST && isset($_POST["id_mat"]))) {
+        $selection = $_POST["id_mat"];
+    }
     $tab = listeIdMateriel();
 ?>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="select_id_mat">
@@ -178,7 +181,12 @@ function afficheFormulaireIdMateriel()
             <select id="id_mat" name="id_mat" size="1">
                 <?php
                 foreach ($tab as $id) {
-                    echo '<option value="' . $id["NoMateriel"] . '">' . $id["NoMateriel"] . '</option>';
+                    if (isset($selection) && $id["NoMateriel"] == $selection) {
+                        echo '<option value="' . $id["NoMateriel"] . '" selected >' . $id["NoMateriel"] . '</option>';
+                    }
+                    else {
+                        echo '<option value="' . $id["NoMateriel"] . '">' . $id["NoMateriel"] . '</option>';
+                    }
                 }
                 ?>
             </select> <br />
@@ -195,8 +203,7 @@ function afficheFormulaireModification($id)
 
     $requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE m.NoMateriel = ' . $id . ';';
     $resultat = $BDD->query($requete);
-    $materiel = $resultat->fetch(PDO::FETCH_ASSOC);
-    var_dump($materiel);   
+    $materiel = $resultat->fetch(PDO::FETCH_ASSOC);   
 
     // on note les différents types pour en faire un menu dropdown
     $types = array('accessoire', 'écran', 'portable', 'serveur', 'station');
@@ -208,15 +215,11 @@ function afficheFormulaireModification($id)
             <select id="id_type_mat" name="type_mat" size="1">
                 <?php
                 foreach ($types as $type) {
-                    if ($materiel['Insee'] == $utilisateur['Insee']) {
-						echo '<option value="' . $ville["Insee"] . '" selected>' . $ville["Commune"] . '</option>';
+                    if ($materiel["Type de matériel"] == $type) {
+						echo '<option value="' . $type . '" selected>' .  ucwords($type) . '</option>';
 					} else {
-						echo '<option value="' . $ville["Insee"] . '">' . $ville["Commune"] . '</option>';
+						echo '<option value="' . $type . '">' .  ucwords($type) . '</option>';
 					}
-
-
-                    echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
-                    // ucwords pour mettre la première lettre en majuscule
                 }
                 ?>
             </select> <br />
@@ -224,14 +227,27 @@ function afficheFormulaireModification($id)
             <select id="id_fournisseur" name="fournisseur" size="1">
                 <?php
                 foreach ($fournisseurs as $fournisseur) {
-                    echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
+                    if ($fournisseur["NomFournisseur"] == $materiel["Vendu par"]) {
+                        echo '<option value="' . $fournisseur["NomFournisseur"]. '" selected>' . $fournisseur["NomFournisseur"] . '</option>';                        
+                    }
+                    else {
+                        echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
+                    }
                 }
                 ?>
             </select> <br />
+
             <label for="id_marque">Marque : </label>
             <input type="text" name="marque" id="id_marque" required size="6" value="<?= $materiel["Marque"]; ?>" /><br />
+
+            <label for="id_description">Description : </label>
+            <input type="text" name="description" id="id_description" required size="10" value="<?= $materiel["Description"]; ?>" /><br />
+
             <label for="id_prix">Prix (en €):</label>
             <input id="id_prix" name="prix" type="number" min="1" step="any" required value="<?= $materiel  ['Prix']; ?>" /><br />
+
+            <input type="hidden" name="id_mat" value="<?= $_POST["id_mat"]; ?>" />
+
             <div onclick=""><input type="submit" value="Modifier" /></div>
 
         </fieldset>
