@@ -137,37 +137,8 @@ function afficherTableauParType()
     $tableau_assoc = $resultat->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <fieldset>
-
-
-            <label for="customRange2" class="form-label">Example range</label>
-            <input type="range" class="form-range" min="0" max="5" id="customRange2">
-            <label for="id_prix">Prix :</label>
-            <select id="id_prix" name="prix" size="1" onclick='listeMateriel()'>
-
-                <option value="0">Choisir un prix</option>
-                <?php
-                foreach ($tableau_assoc as $ligne) {
-                    echo '<option value="' . $ligne["Type Mat"] . '">' . $ligne["Marque"] . " " . $ligne["Description"] . " " . $ligne["Prix"] . " " . $ligne["Nom fournisseur"] . " </option>" . "\n";
-                }
-                ?>
-            </select>
-        </fieldset>
-    </form>
-
-    <label for="id_marque">Marque :</label>
-    <select id="id_marque" name="marque" size="1" onclick='listeMateriel()'>
-        <option value="0">Choisir une marque</option>
-        <?php
-        foreach ($tableau_assoc as $ligne) {
-            echo '<option value="' . $ligne["Type Mat"] . '">' . $ligne["Marque"] . " " . $ligne["Description"] . " " . $ligne["Prix"] . " " . $ligne["Nom fournisseur"] . " </option>" . "\n";
-        }
-        ?>
-    </select>
-    </fieldset>
-    </form>
-
 
     <label for="id_type_mat">Type du matériel :</label>
     <select id="id_type_mat" name="type_mat" size="1" onclick='listeMateriel()'>

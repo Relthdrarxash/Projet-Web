@@ -23,7 +23,7 @@ include('includes/header.php');
       ?>
     </div>
 
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Enable both scrolling & backdrop</button>
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Choisir produit par type</button>
 
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
       <div class="offcanvas-header">
@@ -32,11 +32,14 @@ include('includes/header.php');
       </div>
       <div class="offcanvas-body">
         <?php
-        var_dump($_GET);
-        if (!empty($_GET) && isset($_GET['type_mat'])) {
+        afficherTableauParType();
 
 
-          $tab = afficherTableauParType($_GET['type_mat']);
+        var_dump($_POST);
+        if (!empty($_POST) && isset($_POST['type_mat'])) {
+
+
+          $tab = listerProduitParType($_POST['type_mat']);
           if ($tab) afficheTableau($tab);
         }
         ?>

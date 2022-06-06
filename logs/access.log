@@ -27,9 +27,15 @@
 01/06/22 11:08:57 : Connexion réussie de quentin@admin.fr depuis ::1 Statut = administrateur
 03/06/22 08:40:56 : Connexion réussie de mathys@admin.fr depuis 127.0.0.1 Statut = administrateur
 04/06/22 11:26:14 : Connexion réussie de quentin@admin.fr depuis 127.0.0.1 Statut = administrateur
+<<<<<<< Updated upstream
 05/06/22 01:45:59 : Connexion réussie de quentin@admin.fr depuis 127.0.0.1 Statut = administrateur
 05/06/22 04:59:31 : Connexion réussie de jean@client.fr depuis 127.0.0.1 Statut = utilisateur
 05/06/22 04:59:48 : Connexion échouée de mathys@admin.fr depuis 127.0.0.1 Statut = Non Connecté
 05/06/22 04:59:51 : Connexion réussie de mathys@admin.fr depuis 127.0.0.1 Statut = administrateur
 06/06/22 10:39:10 : Connexion réussie de quentin@admin.fr depuis 127.0.0.1 Statut = administrateur
 06/06/22 05:28:01 : Connexion réussie de quentin@admin.fr depuis 127.0.0.1 Statut = administrateur
+=======
+04/06/22 11:11:49 : Connexion réussie de mathys@admin.fr depuis 127.0.0.1 Statut = administrateur
+06/06/22 10:42:16 : Connexion échouée de mathys@admin.fr depuis 127.0.0.1 Statut = Non Connecté
+06/06/22 10:42:24 : Connexion réussie de mathys@admin.fr depuis 127.0.0.1 Statut = administrateur
+>>>>>>> Stashed changes

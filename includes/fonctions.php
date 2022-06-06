@@ -310,3 +310,20 @@ function modification($type, $marque, $fournisseur, $description, $prix, $idMate
 		$retour = array($resultatMateriel, $resultatPropose);
 	return $retour;
 }
+
+function listerProduitParType($type_mat)
+{
+
+	$retour = false ;
+
+	$madb = new PDO('sqlite:bdd/IUT.sqlite'); 
+	$type_mat = $madb->quote($type_mat);
+	$requete = "SELECT type_mat FROM Materiel WHERE type_mat = $type_mat;";
+
+	// Resultat.type = objet PDO non exploitable directement
+	$resultat = $madb->query($requete);
+	if ($resultat) {
+		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+	}
+	return $retour;
+}
