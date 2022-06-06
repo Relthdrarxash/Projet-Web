@@ -54,7 +54,7 @@ function connexion($login, $pass)
 		$retour = true;
 	} else {
 
-		// connexin Pas Ok -> retour False
+		// connexion Pas Ok -> retour False
 		$retour = false;
 	}
 	return $retour;

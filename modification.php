@@ -1,10 +1,6 @@
 <?php
 include('includes/header.php');
-if ($_SESSION["statut"] == 'administrateur') {
-
-?>
-<?php
-} else {
+if ($_SESSION["statut"] != 'administrateur') {
     deniedAccess();
     sleep(5);
     redirect();
