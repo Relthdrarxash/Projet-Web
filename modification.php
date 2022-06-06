@@ -25,6 +25,29 @@ if ($_SESSION["statut"] == 'administrateur') {
                 <?php
                 if ($_SESSION["statut"] == 'administrateur') {
 
+                    if (
+                        isset($_POST["type_mat"])
+                        && isset($_POST["fournisseur"])
+                        && isset($_POST["marque"])
+                        && isset($_POST["description"])
+                        && isset($_POST["prix"])
+                    ) {
+                        /*
+
+                        echo '<p> Type Mat :' . $_POST["type_mat"] . '</p>';
+                        echo '<p> Fournisseur :' . $_POST["fournisseur"] . '</p>';
+                        echo '<p> Marque :' . $_POST["marque"] . '</p>';
+                        echo '<p> description :' . $_POST["description"] . '</p>';
+                        echo '<p> prix :' . $_POST["prix"] . '</p>';
+
+                        */
+                        try {
+                            $res = modification($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["prix"], $_POST["id_mat"]);
+                        } catch (Exception $e) {
+                            echo "Erreur : $e";
+                        }
+                    }
+
                 ?>
 
                     <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -52,29 +75,19 @@ if ($_SESSION["statut"] == 'administrateur') {
 
                         if (isset($_POST["id_mat"])) {
                             afficheFormulaireModification($_POST["id_mat"]);
-                            if (
-                                !empty($_SESSION)
-                                && !empty($_POST)
-                                && isset($_POST["type_mat"])
-                                && isset($_POST["marque"])
-                                && isset($_POST["fournisseur"])
-                                && isset($_POST["description"])
-                                && isset($_POST["prix"])
-                            ) {
-
-                                // Ptet mettre une taille max pour la
-                                try {
-                                    $res = modification($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["prix"]);
-                                    echo "L'entrée a bien été modifié";
-                                } catch (Exception $e) {
-                                    echo "Erreur : $e";
-                                }
-                            }
-                        ?>
-                            <p id="res_modification"></p>
-                    <?php
                         }
-                    }
+
+
+                        if (isset($res)) {
+                            echo "L'entrée a bien été modifiée";
+                        } else if (isset($e)) {
+                            echo "Erreur : $e";
+                        }
+                        ?>
+                        <p id="res_modification"></p>
+                    <?php
+
+                }
                     ?>
 
             </article>

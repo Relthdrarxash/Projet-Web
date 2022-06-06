@@ -177,11 +177,9 @@ function afficheTableau($tab)
 		foreach ($ligne as $entete => $cellule) {
 			if ($entete == "Image") {
 				echo '<td><img class="image_table" src="img/' . $cellule . '" alt="' . $cellule . '"/></td>';
-			} 
-			else if ($entete == "Prix") {
+			} else if ($entete == "Prix") {
 				echo "<td>$cellule €</td>";
-			}
-			else {
+			} else {
 				echo "<td>$cellule</td>";
 			}
 		}
@@ -195,12 +193,14 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 {
 	$retour = 0;
 	include('connexionBDD.php');
-	// filtrer les paramètres		
+	// filtrer et protéger les paramètres	
+	// on protège également les paramètres issus d'une sélection car ils pourraient être issus d'une modification de la requête 
+	// via une interception (ex : BurpSuite)
 	$type = $BDD->quote($type);
-	$marque = $BDD->quote($marque);
+	$marque = $BDD->quote(htmlentities($marque, 0, "UTF-8"));
 	$fournisseur = $BDD->quote($fournisseur);
-	$description = $BDD->quote($description);
-	$nom_image = $BDD->quote($nom_image);
+	$description = $BDD->quote(htmlentities($description, 0, "UTF-8"));
+	$nom_image = $BDD->quote(htmlentities($nom_image, 0, "UTF-8"));
 
 	// requête
 	$requeteMateriel = "INSERT INTO Materiel(type_mat, marque, description, image) VALUES ($type, $marque, $description, $nom_image);";
@@ -226,6 +226,7 @@ function getIdFournisseur($fournisseur)
 	if ($resultat) {
 		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
+	var_dump($retour);	
 	return $retour["NoFournisseur"];
 }
 
@@ -235,13 +236,15 @@ function getIdMateriel($description)
 	// On utilise la description car elle est différente pour toutes les valeurs	
 	$requete = "SELECT NoMateriel FROM Materiel WHERE Description = $description";
 	$resultat = $BDD->query($requete);
+	// echo '<p>'.var_dump($resultat).'</p>';
 	if ($resultat) {
 		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
 	return $retour["NoMateriel"];
 }
 
-function listeIdMateriel() {
+function listeIdMateriel()
+{
 	include('connexionBDD.php');
 	$requete = "SELECT NoMateriel FROM Materiel";
 	$resultat = $BDD->query($requete);
@@ -251,22 +254,55 @@ function listeIdMateriel() {
 	return $retour;
 }
 
-function modification($type, $marque, $fournisseur,$description,$prix)
+function modification($type, $marque, $fournisseur, $description, $prix, $idMateriel)
 {
 	$retour = 0;
-	include('connexionBDD.php');
-	// filtrer les paramètres		
-	$type = $BDD->quote($type);
-	$marque = $BDD->quote($marque);
-	$fournisseur = $BDD->quote($fournisseur);
 
-	// requête
-	$requeteMateriel = "UPDATE Materiel set (type_mat, marque, description, image) VALUES ($type, $marque, $fournisseur,$prix);";
-	$resultatMateriel = $BDD->exec($requeteMateriel);
-	// modif du matériel associé à un fournisseur dans la table propose
+	include('connexionBDD.php');
+
+	// filtrer les paramètres
+	// on protège également les paramètres issus d'une sélection car ils pourraient être issus d'une modification de la requête 
+	// via une interception (ex : BurpSuite)
+	// htmlentities décode en ISO-8859-1 par défaut donc pose problème pour les accents
+	$type = $BDD->quote($type);
+	$marque = $BDD->quote(htmlentities($marque, 0, "UTF-8"));
+	$fournisseur = $BDD->quote($fournisseur);
+	$description = $BDD->quote(htmlentities($description, 0, "UTF-8"));
 	$idFournisseur = getIdFournisseur($fournisseur);
-	$idMateriel = getIdMateriel($description);
-	$requetePropose = "UPDATE Propose set (noMateriel, noFournisseur, prix) VALUES($idMateriel, $idFournisseur, $prix)";
+
+
+	// requête pour la table matériel
+	/*
+	UPDATE Materiel 
+	SET 
+	type_mat = $type, 
+	marque = $marque, 
+	description = $description
+	WHERE NoMateriel = $idMateriel;
+	*/
+	$requeteMateriel = "UPDATE Materiel 
+	SET 
+	type_mat = $type, 
+	marque = $marque, 
+	description = $description
+	WHERE NoMateriel = $idMateriel;";
+	$resultatMateriel = $BDD->exec($requeteMateriel);
+
+	// modif du matériel associé à un fournisseur dans la table propose
+	/*
+	UPDATE Materiel 
+	SET 
+	NoMateriel = $idMateriel,
+	NoFournisseur = $idFournisseur,
+	Prix = $prix
+	WHERE NoMateriel = $idMateriel;
+	*/
+	$requetePropose = "UPDATE Propose 
+	SET 
+	NoMateriel = $idMateriel,
+	NoFournisseur = $idFournisseur,
+	Prix = $prix
+	WHERE NoMateriel = $idMateriel;";
 	$resultatPropose = $BDD->exec($requetePropose);
 	if ($resultatMateriel == false && $resultatPropose == false)
 		$retour = 0;
