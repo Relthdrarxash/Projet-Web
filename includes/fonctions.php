@@ -226,7 +226,7 @@ function getIdFournisseur($fournisseur)
 	if ($resultat) {
 		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
-	var_dump($retour);	
+	// var_dump($retour);	
 	return $retour["NoFournisseur"];
 }
 

@@ -217,13 +217,15 @@ function afficheFormulaireModification($id)
 {
     include('connexionBDD.php');
 
-    $requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE m.NoMateriel = ' . $id . ';';
+    $requete = 'SELECT Type_mat, Marque, Description, p.prix AS "Prix", Image, nomfournisseur FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE m.NoMateriel = ' . $id . ';';
     $resultat = $BDD->query($requete);
     $materiel = $resultat->fetch(PDO::FETCH_ASSOC);
 
     // on note les différents types pour en faire un menu dropdown
     $types = array('accessoire', 'écran', 'portable', 'serveur', 'station');
     $fournisseurs = recupFournisseur();
+    // décommenter pour voir le résultat de la requête
+    // var_dump($materiel);
 ?>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="modification" onsubmit="return validationMateriel();">
         <fieldset>
@@ -231,7 +233,7 @@ function afficheFormulaireModification($id)
             <select id="id_type_mat" name="type_mat" size="1">
                 <?php
                 foreach ($types as $type) {
-                    if ($materiel["Type de matériel"] == $type) {
+                    if ($materiel["Type_mat"] == $type) {
                         echo '<option value="' . $type . '" selected>' .  ucwords($type) . '</option>';
                     } else {
                         echo '<option value="' . $type . '">' .  ucwords($type) . '</option>';
@@ -243,7 +245,7 @@ function afficheFormulaireModification($id)
             <select id="id_fournisseur" name="fournisseur" size="1">
                 <?php
                 foreach ($fournisseurs as $fournisseur) {
-                    if ($fournisseur["NomFournisseur"] == $materiel["Vendu par"]) {
+                    if ($fournisseur["NomFournisseur"] == $materiel["nomfournisseur"]) {
                         echo '<option value="' . $fournisseur["NomFournisseur"] . '" selected>' . $fournisseur["NomFournisseur"] . '</option>';
                     } else {
                         echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
