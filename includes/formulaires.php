@@ -243,3 +243,29 @@ function afficheFormulaireModification($id)
 <?php
     echo "<br/>";
 } // fin afficheFormulairModification
+
+function afficheFormulaireTableauParType()
+{
+    $types = array('accessoire', 'écran', 'portable', 'serveur', 'station');
+    $fournisseurs = recupFournisseur();
+?>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="insertion" onsubmit="return validationMateriel();">
+        <fieldset>
+            <label for="id_type_mat">Type du matériel :</label>
+            <select id="id_type_mat" name="type_mat" size="1">
+                <?php
+                foreach ($types as $type) {
+                    if (isset($_POST['type_mat'])) {
+                        if ($type == $_POST['type_mat']) {
+                            echo '<option value="' . $type . '" selected>' . ucwords($type) . '</option>';
+                        }
+                        else {
+                            echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
+                        }
+                    } else {
+                        echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
+}
+                }
+               ?> <div onclick=""><input type="submit" value="Modifier" /></div>
+        <?php    
+        }

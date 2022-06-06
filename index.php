@@ -32,7 +32,7 @@ include('includes/header.php');
       </div>
       <div class="offcanvas-body">
         <?php
-        afficherTableauParType();
+        afficheFormulaireTableauParType();
 
 
         var_dump($_POST);
