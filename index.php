@@ -37,7 +37,7 @@ include('includes/header.php');
 
         var_dump($_POST);
         if (!empty($_POST) && isset($_POST['type_mat'])) {
-
+        var_dump($_POST);
 
           $tab = listerProduitParType($_POST['type_mat']);
           if ($tab) afficheTableau($tab);
