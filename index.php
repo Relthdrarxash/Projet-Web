@@ -35,9 +35,11 @@ include('includes/header.php');
         afficheFormulaireTableauParType();
 
 
+        
+        if (!empty($_SESSION) && !empty($_POST) && isset($_POST['type_mat'])) {
         var_dump($_POST);
-        if (!empty($_POST) && isset($_POST['type_mat'])) {
-        var_dump($_POST);
+
+          afficheTableau(listeMateriel());
 
           $tab = listerProduitParType($_POST['type_mat']);
           if ($tab) afficheTableau($tab);

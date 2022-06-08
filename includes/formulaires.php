@@ -249,7 +249,7 @@ function afficheFormulaireTableauParType()
     $types = array('accessoire', 'écran', 'portable', 'serveur', 'station');
     $fournisseurs = recupFournisseur();
 ?>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="insertion" onsubmit="return validationMateriel();">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return validationMateriel();">
         <fieldset>
             <label for="id_type_mat">Type du matériel :</label>
             <select id="id_type_mat" name="type_mat" size="1">
@@ -266,6 +266,6 @@ function afficheFormulaireTableauParType()
                         echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
 }
                 }
-               ?> <div onclick=""><input type="submit" value="Modifier" /></div>
+               ?> <div onclick=""><input type="submit" value="Afficher" /></div>
         <?php    
         }
