@@ -315,13 +315,11 @@ function listerProduitParType($type_mat)
 {
 
 	$retour = false ;
+	include('connexionBDD.php');
+	$type_mat = $BDD->quote($type_mat);
+	$requete = 'SELECT m.NoMateriel AS "Id", Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE type_mat = '.$type_mat.';';
 
-	$madb = new PDO('sqlite:bdd/IUT.sqlite'); 
-	$type_mat = $madb->quote($type_mat);
-	$requete = "SELECT type_mat FROM Materiel WHERE type_mat = $type_mat;";
-
-	// Resultat.type = objet PDO non exploitable directement
-	$resultat = $madb->query($requete);
+	$resultat = $BDD->query($requete);
 	if ($resultat) {
 		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
 	}

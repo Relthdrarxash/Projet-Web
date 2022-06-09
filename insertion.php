@@ -43,7 +43,7 @@ if ($_SESSION["statut"] == 'administrateur') {
                             afficheTableau(listeMateriel());
                         }
                     }
-                    else {
+                    else if (isset($_POST['captcha']) &&  $_POST['captcha'] != $_SESSION['code']) {
                         echo '<p>Captcha incorrect, veuillez recommencer</p>';
                     }
                     ?>

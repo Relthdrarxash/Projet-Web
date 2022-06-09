@@ -80,8 +80,7 @@ function afficheFormulaireInsertion()
                     if (isset($_POST['type_mat'])) {
                         if ($type == $_POST['type_mat']) {
                             echo '<option value="' . $type . '" selected>' . ucwords($type) . '</option>';
-                        }
-                        else {
+                        } else {
                             echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
                         }
                     } else {
@@ -127,33 +126,6 @@ function afficheFormulaireInsertion()
 <?php
     echo "<br/>";
 } // fin afficheFormulairInsertion
-
-function afficherTableauParType()
-{
-
-    include('connexionBDD.php');
-    $requete = 'SELECT Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
-    $resultat = $BDD->query($requete);
-    $tableau_assoc = $resultat->fetchAll(PDO::FETCH_ASSOC);
-?>
-
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <fieldset>
-
-    <label for="id_type_mat">Type du matériel :</label>
-    <select id="id_type_mat" name="type_mat" size="1" onclick='listeMateriel()'>
-        <option value="0">Choisir un Type</option>
-        <?php
-        foreach ($tableau_assoc as $ligne) {
-            echo '<option value="' . $ligne["Type Mat"] . '">' . $ligne["Marque"] . " " . $ligne["Description"] . " " . $ligne["Prix"] . " " . $ligne["Nom fournisseur"] . " </option>" . "\n";
-        }
-        ?>
-    </select>
-    </fieldset>
-    </form>
-<?php
-    echo "<br/>";
-}
 
 function afficheFormulaireIdMateriel()
 {
@@ -258,14 +230,18 @@ function afficheFormulaireTableauParType()
                     if (isset($_POST['type_mat'])) {
                         if ($type == $_POST['type_mat']) {
                             echo '<option value="' . $type . '" selected>' . ucwords($type) . '</option>';
-                        }
-                        else {
+                        } else {
                             echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
                         }
                     } else {
                         echo '<option value="' . $type . '">' . ucwords($type) . '</option>';
-}
+                    }
                 }
-               ?> <div onclick=""><input type="submit" value="Afficher" /></div>
-        <?php    
-        }
+                ?>
+                <input type="submit" value="Afficher" />
+            </select> <br />
+        </fieldset>
+    </form>
+<?php
+}
+?>
