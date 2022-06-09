@@ -9,15 +9,14 @@ include('includes/header.php');
     <div class="section-title">
       <h1>Menu principal</h1>
     </div>
-    <?php var_dump($_POST); ?>
+    <!-- <?php //var_dump($_POST); ?> -->
     <div class="row mx-1 text-center">
       <?php
       // Afficher les images dans la fonction affiche tableau
       // Mettre un tableau qui utilise 6 colonnes bootstrap 
       if (empty($_POST)) {
         afficheTableau(listeMateriel());
-      } 
-      else if (!empty($_POST) && isset($_POST["type_mat"])) {
+      } else if (!empty($_POST) && isset($_POST["type_mat"])) {
         afficheTableau(listerProduitParType($_POST["type_mat"]));
       }
       ?>
@@ -33,15 +32,6 @@ include('includes/header.php');
       <div class="offcanvas-body">
         <?php
         afficheFormulaireTableauParType();
-
-        if (!empty($_SESSION) && !empty($_POST) && isset($_POST['type_mat'])) {
-          var_dump($_POST);
-
-          afficheTableau(listeMateriel());
-
-          $tab = listerProduitParType($_POST['type_mat']);
-          if ($tab) afficheTableau($tab);
-        }
         ?>
 
       </div>
