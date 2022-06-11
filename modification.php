@@ -88,8 +88,10 @@ if ($_SESSION["statut"] != 'administrateur') {
                 ?>
 
             </article>
+        </div>
+    </div>
+</section>
 
-
-            <?php
-            include('includes/footer.php');
-            ?>
+<?php
+include('includes/footer.php');
+?>

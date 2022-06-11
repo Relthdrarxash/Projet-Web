@@ -15,6 +15,9 @@ if ($_SESSION["statut"] == 'administrateur') {
             </div>
             <div class="row">
                 <article>
+                <h2>
+                    Formulaire d'insertion :
+                </h2>
                     <?php
                     afficheFormulaireInsertion();
                     if (isset($_POST['captcha']) &&  $_POST['captcha'] == $_SESSION['code']) {
@@ -28,31 +31,28 @@ if ($_SESSION["statut"] == 'administrateur') {
                             && isset($_POST["nom_image"])
                             && isset($_POST["prix"])
                         ) {
-                            ?>
+                    ?>
                             <p id="res_insertion">
-                            <?php
-                            try {
-                                $res = insertion($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["nom_image"], $_POST["prix"]);
-                                if ($res) {
-                                    echo "L'entrée a bien été inséré";
+                                <?php
+                                try {
+                                    $res = insertion($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["nom_image"], $_POST["prix"]);
+                                    if ($res) {
+                                        echo "L'entrée a bien été inséré";
+                                    } else {
+                                        echo "Erreur, l'entrée existe déjà";
+                                    }
+                                } catch (Exception $e) {
+                                    echo "Erreur : $e";
                                 }
-                                else {
-                                    echo "Erreur, l'entrée existe déjà";
-                                }
-                            } catch (Exception $e) {
-                                echo "Erreur : $e";
-                            }
-                            ?>
-
-                            <?php
+                                ?>
+                            </p>
+                    <?php
                             afficheTableau(listeMateriel());
                         }
-                    }
-                    else if (isset($_POST['captcha']) &&  $_POST['captcha'] != $_SESSION['code']) {
+                    } else if (isset($_POST['captcha']) &&  $_POST['captcha'] != $_SESSION['code']) {
                         echo '<p>Captcha incorrect, veuillez recommencer</p>';
                     }
                     ?>
-                    </p>
                 </article>
             </div>
         </div>
