@@ -185,10 +185,13 @@ function afficheFormulaireModification($id)
                 ?>
             </select> <br />
             <label for="id_fournisseur">Fournisseur :</label>
+            <?php
+                var_dump($materiel["NomFournisseur"]);
+            ?>
             <select id="id_fournisseur" name="fournisseur" size="1">
                 <?php
                 foreach ($fournisseurs as $fournisseur) {
-                    if ($fournisseur["NomFournisseur"] == $materiel["nomfournisseur"]) {
+                    if ($fournisseur["NomFournisseur"] == $materiel["NomFournisseur"]) {
                         echo '<option value="' . $fournisseur["NomFournisseur"] . '" selected>' . $fournisseur["NomFournisseur"] . '</option>';
                     } else {
                         echo '<option value="' . $fournisseur["NomFournisseur"] . '">' . $fournisseur["NomFournisseur"] . '</option>';
