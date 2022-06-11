@@ -5,7 +5,7 @@
 // Appelle de la fonction redirection pour toutes les pages (si l'utilisateur n'est pas autorisé, il sera redirigé pour toutes les pages du site)
 redirect(); ?>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
 	<meta charset="utf-8">

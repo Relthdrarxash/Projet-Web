@@ -23,7 +23,7 @@ function afficheUtilisateur()
 		$username = explode("@", $_SESSION["login"]);
 		$html .= 'Bonjour ' . ucwords($username[0]);
 	}
-	$html .=  "\n" . '</span';
+	$html .=  "\n" . '</span>';
 	return $html;
 }
 
@@ -154,7 +154,7 @@ function listeMateriel()
 	$retour = false;
 	include('connexionBDD.php');
 
-	$requete = 'SELECT m.NoMateriel AS "Id", Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur;';
+	$requete = 'SELECT m.NoMateriel AS "Id", Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur ORDER BY m.NoMateriel ASC;';
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
 		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
@@ -203,20 +203,21 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 	$description = $BDD->quote(htmlentities($description, 0, "UTF-8"));
 	$nom_image = $BDD->quote(htmlentities($nom_image, 0, "UTF-8"));
 
-	// requête
-	$requeteMateriel = "INSERT INTO Materiel(type_mat, marque, description, image) VALUES ($type, $marque, $description, $nom_image);";
-	$resultatMateriel = $BDD->exec($requeteMateriel);
+	if (!alreadyExist($marque, $fournisseur, $description)) {
+		// requête
+		$requeteMateriel = "INSERT INTO Materiel(type_mat, marque, description, image) VALUES ($type, $marque, $description, $nom_image);";
+		$resultatMateriel = $BDD->exec($requeteMateriel);
 
-	// ajout du matériel associé à un fournisseur dans la table propose
-	$idFournisseur = getIdFournisseur($fournisseur);
-	$idMateriel = getIdMateriel($description);
-	$requetePropose = "INSERT INTO Propose VALUES($idMateriel, $idFournisseur, $prix)";
-	$resultatPropose = $BDD->exec($requetePropose);
+		// ajout du matériel associé à un fournisseur dans la table propose
+		$idFournisseur = getIdFournisseur($fournisseur);
+		$idMateriel = getIdMateriel($description);
+		$requetePropose = "INSERT INTO Propose VALUES($idMateriel, $idFournisseur, $prix)";
+		$resultatPropose = $BDD->exec($requetePropose);
 
-	if ($resultatMateriel == false && $resultatPropose == false)
-		$retour = 0;
-	else
-		$retour = array($resultatMateriel, $resultatPropose);
+		if ($resultatMateriel == false && $resultatPropose == false) {
+			$retour = 1;
+		}
+	}
 	return $retour;
 }
 
@@ -231,7 +232,7 @@ function getIdFournisseur($fournisseur)
 	if ($resultat) {
 		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
-	
+
 	return $retour["NoFournisseur"];
 }
 
@@ -324,15 +325,32 @@ function modification($type, $marque, $fournisseur, $description, $prix, $idMate
 //*******************************Filtrage des produits par type*************************************************
 function listerProduitParType($type_mat)
 {
-	$retour = false ;
+	$retour = false;
 	include('connexionBDD.php');
 
 	$type_mat = $BDD->quote($type_mat);
-	$requete = 'SELECT m.NoMateriel AS "Id", Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE type_mat = '.$type_mat.';';
+	$requete = 'SELECT m.NoMateriel AS "Id", Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE type_mat = ' . $type_mat . ';';
 
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
 		$retour = $resultat->fetchAll(PDO::FETCH_ASSOC);
+	}
+	return $retour;
+}
+
+//*******************************Vérifier l'unicité des tables*************************************************
+function alreadyExist($marque, $fournisseur, $description)
+{
+
+	$retour = false;
+	include('connexionBDD.php');
+	$requete = "SELECT * FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE m.marque = $marque AND m.description = $description AND f.nomFournisseur = $fournisseur";
+	$resultat = $BDD->query($requete);
+	if ($resultat) {
+		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
+	}
+	if (!empty($resultat)) {
+		$retour = true;
 	}
 	return $retour;
 }

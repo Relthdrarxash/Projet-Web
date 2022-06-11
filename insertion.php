@@ -17,9 +17,6 @@ if ($_SESSION["statut"] == 'administrateur') {
                 <article>
                     <?php
                     afficheFormulaireInsertion();
-                    ?>
-                    <p id="res_insertion"></p>
-                    <?php
                     if (isset($_POST['captcha']) &&  $_POST['captcha'] == $_SESSION['code']) {
 
                         if (
@@ -31,15 +28,23 @@ if ($_SESSION["statut"] == 'administrateur') {
                             && isset($_POST["nom_image"])
                             && isset($_POST["prix"])
                         ) {
-                            // ^[a-zA-Z ]*$ pour matcher un texte et éviter des problèmes de stockage dans la BDD
-                            // Ptet mettre une taille max
+                            ?>
+                            <p id="res_insertion">
+                            <?php
                             try {
                                 $res = insertion($_POST["type_mat"], $_POST["marque"], $_POST["fournisseur"], $_POST["description"], $_POST["nom_image"], $_POST["prix"]);
-                                echo "L'entrée a bien été inséré";
+                                if ($res) {
+                                    echo "L'entrée a bien été inséré";
+                                }
+                                else {
+                                    echo "Erreur, l'entrée existe déjà";
+                                }
                             } catch (Exception $e) {
                                 echo "Erreur : $e";
                             }
+                            ?>
 
+                            <?php
                             afficheTableau(listeMateriel());
                         }
                     }
@@ -47,6 +52,7 @@ if ($_SESSION["statut"] == 'administrateur') {
                         echo '<p>Captcha incorrect, veuillez recommencer</p>';
                     }
                     ?>
+                    </p>
                 </article>
             </div>
         </div>

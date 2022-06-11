@@ -12,7 +12,7 @@ include('includes/header.php');
     <!-- <?php //var_dump($_POST); 
           ?> -->
     <div class="row mx-1 text-center">
-      <div class="accordion accordion-flush" id="accordionFlushExample">
+      <div class="accordion accordion-flush">
         <div class="accordion-item">
 
           <h2 class="accordion-header" id="flush-headingOne">
@@ -35,7 +35,7 @@ include('includes/header.php');
       if (!empty($_POST) && isset($_POST["type_mat"])) {
       ?>
 
-        <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion accordion-flush" >
           <div class="accordion-item">
 
             <h2 class="accordion-header" id="flush-headingTwo">

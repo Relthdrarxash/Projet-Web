@@ -102,7 +102,7 @@ function afficheFormulaireInsertion()
                 ?>
             </select> <br />
             <label for="id_fournisseur">Fournisseur :</label>
-            <select id="id_fournisseur" name="fournisseur" size="1" value="<?php if (isset($_POST['fournisseur'])) echo $_POST['fournisseur'] ?>">
+            <select id="id_fournisseur" name="fournisseur" size="1">
                 <?php
                 foreach ($fournisseurs as $fournisseur) {
                     if (isset($_POST['fournisseur'])) {
@@ -252,8 +252,8 @@ function afficheFormulaireTableauParType()
                     }
                 }
                 ?>
-                <input type="submit" value="Afficher" />
             </select> <br />
+            <input type="submit" value="Afficher" />
         </fieldset>
     </form>
 <?php
