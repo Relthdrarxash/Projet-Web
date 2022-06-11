@@ -3,12 +3,18 @@
 //****************Génération du menu**************************************
 function generationMenu($tableauMenu)
 {
+    // on exploite le fait que l'html n'est que du texte pour le stocker dans une variable
+    // et ensuite afficher le texte de cette variable sur la page
     $html = '<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">' . "\n" .
         '<div class="container-fluid">' . "\n" .
         '<ul class="navbar-nav me-auto mb-2 mb-lg-0">' . "\n";
+
     // On récupère le nom de fichier pour le mettre en évidence avec le "active" de Bootstrap
+    // On enlève tout le chemin avec le explode
     $fileName = explode("/", $_SERVER['SCRIPT_NAME']);
+    // on récupère la fin du chemin (nom du fichier) avec le end
     $fileName = end($fileName);
+
     // Décommenter pour vérifier le nom du fichier
     // echo end($fileName);
     // Le code html du contenu est stocké dans la variable html
@@ -28,6 +34,7 @@ function generationMenu($tableauMenu)
                 $html .= '<a class="nav-link px-1 mx-1" aria-current="page" ' . "href='{$page['url']}'>{$page['texte']}</a>";
             }
         }
+
         // Si on est connecté -> On teste si on est un utilisateur ou un admin
         else {
             // Si utilisateur -> pas d'affichage des pages insertion et modification
@@ -51,12 +58,16 @@ function generationMenu($tableauMenu)
                 }
             }
         }
+        // on ferme le li
         $html .= "</li>\n";
     }
+    // on ferme le ul
     $html .= "</ul>\n";
 
+    // on affiche l'utilisateur ou la demande de connexion à droite
     $html .= afficheUtilisateur();
 
+    // on ferme les dernières balises
     $html .= "</div>\n";
     $html .= "</nav>\n";
 
@@ -186,7 +197,7 @@ function afficheFormulaireModification($id)
             </select> <br />
             <label for="id_fournisseur">Fournisseur :</label>
             <?php
-                var_dump($materiel["NomFournisseur"]);
+            var_dump($materiel["NomFournisseur"]);
             ?>
             <select id="id_fournisseur" name="fournisseur" size="1">
                 <?php

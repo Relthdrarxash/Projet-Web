@@ -64,27 +64,28 @@ if ($_SESSION["statut"] != 'administrateur') {
                             </div>
 
                         </div>
+                    </div>
 
-                        <?php
-
-                        afficheFormulaireIdMateriel();
-
-                        if (isset($_POST["id_mat"])) {
-                            afficheFormulaireModification($_POST["id_mat"]);
-                        }
-
-
-                        if (isset($res)) {
-                            echo "L'entrée a bien été modifiée";
-                        } else if (isset($e)) {
-                            echo "Erreur : $e";
-                        }
-                        ?>
-                        <p id="res_modification"></p>
                     <?php
 
-                }
+                    afficheFormulaireIdMateriel();
+
+                    if (isset($_POST["id_mat"])) {
+                        afficheFormulaireModification($_POST["id_mat"]);
+                    }
+
+
+                    if (isset($res)) {
+                        echo "L'entrée a bien été modifiée";
+                    } else if (isset($e)) {
+                        echo "Erreur : $e";
+                    }
                     ?>
+                    <p id="res_modification"></p>
+                <?php
+
+                }
+                ?>
 
             </article>
 

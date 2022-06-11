@@ -12,6 +12,7 @@ function nomFichier()
 	return ucwords($pageTitle[0]);
 }
 
+// Affichage du nom de l'utilisateur ou demande de connexion en haut à droite du site
 function afficheUtilisateur()
 {
 	$html = '<span id="user">' . "\n";
@@ -146,7 +147,7 @@ function deniedAccess()
 }
 
 
-//********************************************************************************
+//*******************************Récupération de toutes les données de matériel de la BDD*************************************************
 function listeMateriel()
 {
 
@@ -162,7 +163,7 @@ function listeMateriel()
 	return $retour;
 }
 
-
+//****************Affichage d'un tableau**************************************
 function afficheTableau($tab)
 {
 	echo '<table>';
@@ -205,11 +206,13 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 	// requête
 	$requeteMateriel = "INSERT INTO Materiel(type_mat, marque, description, image) VALUES ($type, $marque, $description, $nom_image);";
 	$resultatMateriel = $BDD->exec($requeteMateriel);
+
 	// ajout du matériel associé à un fournisseur dans la table propose
 	$idFournisseur = getIdFournisseur($fournisseur);
 	$idMateriel = getIdMateriel($description);
 	$requetePropose = "INSERT INTO Propose VALUES($idMateriel, $idFournisseur, $prix)";
 	$resultatPropose = $BDD->exec($requetePropose);
+
 	if ($resultatMateriel == false && $resultatPropose == false)
 		$retour = 0;
 	else
@@ -217,19 +220,22 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 	return $retour;
 }
 
+//*******************************Récupération de l'Id du fournisseur à partir du nom*************************************************
 function getIdFournisseur($fournisseur)
 {
 	include('connexionBDD.php');
-	// $fournisseur est déjà protégé
+	// $fournisseur est déjà protégé car appelé uniquement depuis une fonction d'insertion/modification
+	// qui protège déjà le fournisseur
 	$requete = "SELECT NoFournisseur FROM Fournisseur WHERE NomFournisseur = $fournisseur";
 	$resultat = $BDD->query($requete);
 	if ($resultat) {
 		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
-	// var_dump($retour);	
+	
 	return $retour["NoFournisseur"];
 }
 
+//*******************************Récupération de l'id du matériel à partir de sa description*************************************************
 function getIdMateriel($description)
 {
 	include('connexionBDD.php');
@@ -243,6 +249,7 @@ function getIdMateriel($description)
 	return $retour["NoMateriel"];
 }
 
+//*******************************Récupération de tous les id du matériel*************************************************
 function listeIdMateriel()
 {
 	include('connexionBDD.php');
@@ -254,6 +261,7 @@ function listeIdMateriel()
 	return $retour;
 }
 
+//*******************************Execution des modifications*************************************************
 function modification($type, $marque, $fournisseur, $description, $prix, $idMateriel)
 {
 	$retour = 0;
@@ -303,7 +311,9 @@ function modification($type, $marque, $fournisseur, $description, $prix, $idMate
 	NoFournisseur = $idFournisseur,
 	Prix = $prix
 	WHERE NoMateriel = $idMateriel;";
+
 	$resultatPropose = $BDD->exec($requetePropose);
+
 	if ($resultatMateriel == false && $resultatPropose == false)
 		$retour = 0;
 	else
@@ -311,11 +321,12 @@ function modification($type, $marque, $fournisseur, $description, $prix, $idMate
 	return $retour;
 }
 
+//*******************************Filtrage des produits par type*************************************************
 function listerProduitParType($type_mat)
 {
-
 	$retour = false ;
 	include('connexionBDD.php');
+
 	$type_mat = $BDD->quote($type_mat);
 	$requete = 'SELECT m.NoMateriel AS "Id", Type_mat AS "Type de matériel", Marque, Description, p.prix AS "Prix", Image, nomfournisseur AS "Vendu par" FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE type_mat = '.$type_mat.';';
 

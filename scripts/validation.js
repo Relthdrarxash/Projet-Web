@@ -42,7 +42,6 @@ function validationMateriel() {
 
     else {
         etatConnexion = true;
-        document.getElementById('res_insertion').className = " Valide";
     }
     return etatConnexion;
 }

@@ -9,15 +9,52 @@ include('includes/header.php');
     <div class="section-title">
       <h1>Menu principal</h1>
     </div>
-    <!-- <?php //var_dump($_POST); ?> -->
+    <!-- <?php //var_dump($_POST); 
+          ?> -->
     <div class="row mx-1 text-center">
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              Produits
+            </button>
+          </h2>
+
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <?php
+              afficheTableau(listeMateriel());
+              ?>
+            </div>
+          </div>
+
+        </div>
+      </div>
       <?php
-      // Afficher les images dans la fonction affiche tableau
-      // Mettre un tableau qui utilise 6 colonnes bootstrap 
-      if (empty($_POST)) {
-        afficheTableau(listeMateriel());
-      } else if (!empty($_POST) && isset($_POST["type_mat"])) {
-        afficheTableau(listerProduitParType($_POST["type_mat"]));
+      if (!empty($_POST) && isset($_POST["type_mat"])) {
+      ?>
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+          <div class="accordion-item">
+
+            <h2 class="accordion-header" id="flush-headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                Produits filtrés
+              </button>
+            </h2>
+
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <?php
+                afficheTableau(listerProduitParType($_POST["type_mat"]));
+                ?>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      <?php
       }
       ?>
     </div>
@@ -33,7 +70,6 @@ include('includes/header.php');
         <?php
         afficheFormulaireTableauParType();
         ?>
-
       </div>
     </div>
 
