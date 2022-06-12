@@ -214,7 +214,7 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 		$requetePropose = "INSERT INTO Propose VALUES($idMateriel, $idFournisseur, $prix)";
 		$resultatPropose = $BDD->exec($requetePropose);
 		// exec renvoie true (1) si qqchose a été modifié
-		var_dump($resultatMateriel);
+		// var_dump($resultatMateriel);
 		if ($resultatMateriel && $resultatPropose) {
 			$retour = 1;
 		}
