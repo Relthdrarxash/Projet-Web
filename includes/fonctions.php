@@ -192,7 +192,7 @@ function afficheTableau($tab)
 //*******************************Execution de l'insertion*************************************************
 function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix)
 {
-	$retour = 0;
+	$retour = false;
 	include('connexionBDD.php');
 	// filtrer et protéger les paramètres	
 	// on protège également les paramètres issus d'une sélection car ils pourraient être issus d'une modification de la requête 
@@ -213,8 +213,9 @@ function insertion($type, $marque, $fournisseur, $description, $nom_image, $prix
 		$idMateriel = getIdMateriel($description);
 		$requetePropose = "INSERT INTO Propose VALUES($idMateriel, $idFournisseur, $prix)";
 		$resultatPropose = $BDD->exec($requetePropose);
-
-		if ($resultatMateriel == false && $resultatPropose == false) {
+		// exec renvoie true (1) si qqchose a été modifié
+		var_dump($resultatMateriel);
+		if ($resultatMateriel && $resultatPropose) {
 			$retour = 1;
 		}
 	}
@@ -341,7 +342,6 @@ function listerProduitParType($type_mat)
 //*******************************Vérifier l'unicité des tables*************************************************
 function alreadyExist($marque, $fournisseur, $description)
 {
-
 	$retour = false;
 	include('connexionBDD.php');
 	$requete = "SELECT * FROM Materiel AS m INNER JOIN Propose as P ON p.nomateriel = m.nomateriel INNER JOIN Fournisseur AS f ON f.nofournisseur = p.nofournisseur WHERE m.marque = $marque AND m.description = $description AND f.nomFournisseur = $fournisseur";
@@ -349,7 +349,7 @@ function alreadyExist($marque, $fournisseur, $description)
 	if ($resultat) {
 		$retour = $resultat->fetch(PDO::FETCH_ASSOC);
 	}
-	if (!empty($resultat)) {
+	if ($retour) {
 		$retour = true;
 	}
 	return $retour;

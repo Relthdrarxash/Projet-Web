@@ -196,9 +196,6 @@ function afficheFormulaireModification($id)
                 ?>
             </select> <br />
             <label for="id_fournisseur">Fournisseur :</label>
-            <?php
-            var_dump($materiel["NomFournisseur"]);
-            ?>
             <select id="id_fournisseur" name="fournisseur" size="1">
                 <?php
                 foreach ($fournisseurs as $fournisseur) {
