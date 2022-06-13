@@ -17,7 +17,7 @@ function validationMateriel() {
     document.getElementById('res_insertion').className = " Invalide";
 
     // On vérifie que la description ne comporte pas de caractères compliqués
-    if (!/^[A-Za-z0-9 àéè_.,!'$ ]*/g.test(description)) {
+    if (!/^[A-Za-z0-9 àéè_.,!]*$/g.test(description)) {
         document.getElementById('res_insertion').innerHTML = "Description invalide, veuillez n'entrer que des caractères simples";
         etatConnexion = false;
     }
