@@ -120,7 +120,7 @@ function afficheFormulaireInsertion()
             <label for="id_marque">Marque : </label>
             <input type="text" name="marque" id="id_marque" placeholder="Marque" required size="6" value="<?php if (isset($_POST['marque'])) echo $_POST['marque'] ?>" /><br />
 
-            <label for="id_marque">Description : </label>
+            <label for="id_description">Description : </label>
             <input type="text" name="description" id="id_description" placeholder="Description" required size="20" value="<?php if (isset($_POST['description'])) echo $_POST['description'] ?>" /><br />
 
             <label for="id_prix">Prix :</label>
